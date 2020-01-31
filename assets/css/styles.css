@@ -1,9 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=IM+Fell+English+SC&display=swap');
-* {
+
+    /* GLOBAL */
+
+body {
     text-align: center;
     font-family: 'IM Fell English SC', serif;
     font-size: 25px;
     background: #f3f0f0;
+}
+img{
+    width: 100px;
+    height: auto;
+	align-self: center;
 }
 
 .button {
@@ -28,14 +36,14 @@ grid-template-rows: repeat(9, 6vh);
 grid-template-columns: repeat(9, 6vh);
 grid-gap: 1px;
 margin: auto 0;
-padding: 3.8vh;
+padding: 30px;
 }
 .grid-item {
 background: #fff;
-padding: 3px;
 border: 1px solid #eee;
 }
 
-img{
-    width: 100px;
+.grid-item img {
+    height: 40px;
+    width: 40px;
 }
