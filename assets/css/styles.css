@@ -6,7 +6,6 @@ body {
     text-align: center;
     font-family: 'IM Fell English SC', serif;
     font-size: 25px;
-    background: #f3f0f0;
 }
 img{
     width: 100px;
@@ -30,20 +29,26 @@ img{
 .button:hover {
     background-color: white;
 }
-.grid-container {
-display: grid;
-grid-template-rows: repeat(9, 6vh);
-grid-template-columns: repeat(9, 6vh);
-grid-gap: 1px;
-margin: auto 0;
-padding: 30px;
-}
-.grid-item {
-background: #fff;
-border: 1px solid #eee;
+
+.grid {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
-.grid-item img {
-    height: 40px;
-    width: 40px;
+.grid-container {
+display: grid;
+grid-template-rows: repeat(10, 9vh);
+grid-template-columns: repeat(10, 9vh);
+grid-gap: 1px;
+margin: auto 0;
+padding: 3.8vh;
+position: relative;
+}
+
+.grid-item {
+background: white;
+border: 1px solid #939393;
+border-radius: 7px ;
 }
