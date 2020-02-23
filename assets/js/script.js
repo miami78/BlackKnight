@@ -100,4 +100,5 @@ function placeImg (image, position){
 	// use line 52 as reference, what is position 'data type'
 	$(`[data-row="${position.row}"][data-column="${position.column}"]`).append(image);
 }
+placeImg(knight.playerWeapon, knight.playerPos);
 createGrid();
