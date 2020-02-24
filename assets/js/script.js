@@ -19,7 +19,6 @@ function placeImg (image, position){
 	// use line 52 as reference, what is position 'data type'
 	$(`[data-row="${position.row}"][data-column="${position.column}"]`).append(image);
 	// $(`[data-row="1"][data-column="1"]`).append(knightImg);
-	console.log($(`[data-row="1"][data-column="1"]`))
 }
 
 // places players randomly 
@@ -30,6 +29,7 @@ function placePlayers(player) {
 	};
 	player.playerPos = coordinates;
 	placeImg(player.playerImage, player.playerPos);
+	console.log(player)
 }
 
 // create barriers at random squares
@@ -60,10 +60,10 @@ dragonImg.src = 'assets/img/player2.png';
 dragonImg.id = 'dragon';
 dragonImg.className = 'player2';
 
-let knight = new Player ("knight",knightImg,100);
-let dragon = new Player ("dragon",dragonImg,100);
+let knight = new Player ("knight",knightImg,100,{row:0,column:0});
+let dragon = new Player ("dragon",dragonImg,100,{row:8,column:8});
 
-let allPlayers = (knight, dragon);
+let player = [knight,dragon];
 
 // weapons
 class Weapon {
@@ -82,5 +82,5 @@ let wall = "";
 let tree = "";
 
 createGrid();
-placePlayers(allPlayers);
+placePlayers(player);
 
