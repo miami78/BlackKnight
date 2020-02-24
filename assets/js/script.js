@@ -1,37 +1,4 @@
 // game Setup
-class Game {
-	constructor(gameContainer) {
-		this.availableCells = [];
-		this.unavailableCells = [];
-		this.gameContainerElement = gameContainer;
-		this.gameGridElement = this.gameContainerElement.querySelector('.grid');
-	}
-	init(){
-		const GRID_SIZE = 10;
-		const PLAYERS = [
-			{
-				name: 'Knight',
-				className: 'player1',
-				health: 100,
-				attack: 10
-			},
-			{
-				name: 'Dragon',
-				className: 'player2',
-				health: 100,
-				attack: 10
-
-			}
-		];
-	// Grid
-	new Grid(this.gameGridElement,GRID_SIZE, this);
-	// Player
-	new Player(GRID_SIZE,PLAYERS[0], this);
-	new Player(GRID_SIZE,PLAYERS[1], this);
-	// Engine
-	new Engine(PLAYERS,this)
-	}
-}
 // players
 class Player {
     constructor(name,weapon,health,position)	{
@@ -102,5 +69,6 @@ function placeImg (image, position){
 	// use line 52 as reference, what is position 'data type'
 	$(`[data-row="${position.row}"][data-column="${position.column}"]`).append(image);
 }
+
 placeImg(knight.playerWeapon, knight.playerPos);
 createGrid();
