@@ -60,9 +60,10 @@ dragonImg.src = 'assets/img/player2.png';
 dragonImg.id = 'dragon';
 dragonImg.className = 'player2';
 
-let knight = new Player ("knight",knightImg,100, {column:1,row:1})
-let dragon = new Player ("dragon",dragonImg,100, {column:8,row:8})
+let knight = new Player ("knight",knightImg,100)
+let dragon = new Player ("dragon",dragonImg,100)
 
+let allPlayers = (knight, dragon);
 
 // weapons
 class Weapon {
@@ -81,5 +82,5 @@ let wall = "";
 let tree = "";
 
 createGrid();
-placePlayers(knight)
+placePlayers(allPlayers);
 
