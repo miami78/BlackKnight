@@ -60,8 +60,8 @@ dragonImg.src = 'assets/img/player2.png';
 dragonImg.id = 'dragon';
 dragonImg.className = 'player2';
 
-let knight = new Player ("knight",knightImg,100)
-let dragon = new Player ("dragon",dragonImg,100)
+let knight = new Player ("knight",knightImg,100);
+let dragon = new Player ("dragon",dragonImg,100);
 
 let allPlayers = (knight, dragon);
 
