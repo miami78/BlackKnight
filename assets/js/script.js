@@ -27,9 +27,12 @@ function placePlayers(player) {
 		row: this.randomNum(),
 		column: this.randomNum()
 	};
+	// occupied by barrier
+	let isTaken = $(`[data-row="${coordinates.row}"][data-column="${coordinates.column}"]`).hasClass("barrier");
+	// occupied by player
+	let isAlsoTaken = $(`[data-row="${coordinates.row}"][data-column="${coordinates.column}"]`).hasClass("playerTaken");
 	player.playerPos = coordinates;
 	placeImg(player.playerImage, player.playerPos);
-	console.log(player)
 }
 
 // create barriers at random squares
@@ -63,7 +66,7 @@ dragonImg.className = 'player2';
 let knight = new Player ("knight",knightImg,100,{row:0,column:0});
 let dragon = new Player ("dragon",dragonImg,100,{row:8,column:8});
 
-let player = [knight,dragon];
+let player = (knight,dragon);
 
 // weapons
 class Weapon {
@@ -81,6 +84,14 @@ let sword = new Weapon ("sword","<img src='../img/weapon1.png' id='sword' class=
 let wall = "";
 let tree = "";
 
-createGrid();
-placePlayers(player);
+// Start new game on click
+$(window).on("load", function() {
+	document.getElementById("newGameBtn").addEventListener("click", function() {
+		createGrid();
+		placePlayers(knight);
+		placePlayers(dragon);
+	});
+});
+
+
 
