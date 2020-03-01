@@ -41,8 +41,19 @@ function createBarrier(barrier) {
 		row: this.randomNum(),
 		column: this.randomNum()
 	};
+	let hasBarrier = $(`[data-row="${coordinates.row}"][data-column="${coordinates.column}"]`).hasClass("barrier");
+	if (hasBarrier) {
+		return this.createBarrier();
+	} else {
+		$(`[data-row="${coordinates.row}"][data-column="${coordinates.column}"]`).hasClass("occupied");
+	}
 }
 
+function placeBarriers() {
+	for(let i = 0; i < 11; i++) {
+		this.createBarrier();
+	}
+}
 // players
 class Player {
     constructor(name,image,health,position)	{
