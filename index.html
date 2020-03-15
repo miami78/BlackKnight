@@ -23,13 +23,53 @@
         <button class="button" id="newGameBtn">New Game</button>
         <button class="button" id="rulesButton">Rules</button>
     </header>
-    <!--------- GRID -------->
-    <section class= "grid text-center">
-        <div class="grid-container">
-            <!--Gameboard-->
-        </div>
-    </section>
-    
+    <!--------- MAIN BODY -------->
+	<main class="main">
+        <!--------- PLAYER 1 BOARD --------->
+			<section class="player-board" id="player-board-1">
+				<!-- KNIGHT NAME -->
+				<div class="name">
+					<img src="assets/img/player1.png" alt="Knights name">
+				</div>
+				<!-- KNIGHT IMAGE AND HEALTH -->
+				<div class="player-detail" id="knightProfile">
+					<img src="assets/img/player1.png" id="profilePic_knight" alt="knight at 100 health">
+					<p >Health</p>
+					<div class="input"  id="knightHealthInput">100</div>
+				</div>
+				<!-- KNIGHT WEAPON IMAGE AND ATTACK -->
+				<div class="player-detail" id="knightWeaponPanel">
+					<img src='assets/img/sword.png' id='sword' class='weapon' data-damage='10' alt='Sword'>
+					<p>Attack</p>
+					<div class="input" id="knightAttackInput">10</div>
+				</div>			
+			</section>
+        <!--------- GRID -------->
+        <section class= "grid text-center">
+            <div class="grid-container">
+                <!--Gameboard-->
+            </div>
+        </section>
+        <!--------- PLAYER 2 BOARD --------->
+			<section class="player-board" id="player-board-2">
+				<!-- DRAGON NAME -->
+				<div class="name">
+					<img src="assets/img/player2.png" alt="Dragons name">
+				</div>
+				<!-- DRAGON IMAGE AND HEALTH -->
+				<div class="player-detail" id="dragonProfile">
+					<img src="assets/img/player2.png" id="profilePic_dragon" alt="dragon at 100 health">
+					<p >Health</p>
+					<div class="input"  id="dragonHealthInput">100</div>
+				</div>
+				<!-- DRAGON WEAPON IMAGE AND ATTACK -->
+				<div class="player-detail" id="dragonWeaponPanel">
+					<img src='assets/img/fire.png' id='sword' class='weapon' data-damage='10' alt='Fire'>
+					<p>Attack</p>
+					<div class="input" id="dragonAttackInput">10</div>
+				</div>			
+			</section>
+    </main>
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="assets/js/script.js"></script>
