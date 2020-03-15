@@ -52,3 +52,6 @@ background: white;
 border: 1px solid #939393;
 border-radius: 7px ;
 }
+.barrier {
+    background-image: url('../img/weapon1.jpg')
+  }

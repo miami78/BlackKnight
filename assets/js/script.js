@@ -71,9 +71,24 @@ let dragon = new Player ("dragon",dragonImg,100,{row:8,column:8});
 let player = (knight,dragon);
 
 // barriers
+class Barrier {
+	constructor(barrierImage,barrierPos) {
+		this.barrierImage = barrierImage;
+		this.barrierPos = barrierPos;
+	}
+}
 
+// wall
+let wallImg = document.createElement("img");
+wallImg.src = 'assets/img/wall.png';
+wallImg.id = 'wall';
+wallImg.className = 'wall1';
+
+let wall = new Barrier(wallImg, {row:0,column:0});
+// let tree = new Barrier();
+let barrier = (wall)
 // create barriers and place them at random squares
-function createBarrier(barrier) {
+function createBarrier() {
 	let coordinates = {
 		row: this.randomNum(),
 		column: this.randomNum()
@@ -88,46 +103,9 @@ function createBarrier(barrier) {
 
 function placeBarriers() {
 	for(let i = 0; i < 12; i++) {
-		this.createBarrier();
+		this.createBarrier(barrier);
 	}
 }
-class Barrier {
-	constructor(barrierImage,barrierPos) {
-		this.barrierImage = barrierImage;
-		this.barrierPos = barrierPos;
-	}
-}
-
-// wall
-let wallImg = document.createElement("img");
-wallImg.src = 'assets/img/weapon1.jpg';
-wallImg.id = 'wall';
-wallImg.className = 'wall1';
-
-let wall = new Barrier(wallImg, {row:0,column:0});
-// let tree = new Barrier();
-let barrier = (wall)
-
-function placeWeapons () {
-	for(let i = 0; i < weapon.length; i++) {
-		this.createWeapon(weapon);
-	}
-}
-
-function createWeapon() {
-	let coordinates = {
-		x: this.randomNum(),
-		y: this.randomNum()
-	};
-	let hasWeapon = $(`[data-row="${coordinates.row}"][data-column="${coordinates.column}"]`).hasClass("weapon");
-	let isTaken = $(`[data-row="${coordinates.row}"][data-column="${coordinates.column}"]`).hasClass("taken");
-	if (isTaken || hasWeapon) {
-		return this.createWeapon(weapon);
-	} else {
-		$(`[data-row="${coordinates.row}"][data-column="${coordinates.column}"]`).addClass("weapon").addClass("taken").attribute(weapon.name).attribute(weapon.image);
-	}
-}
-
 
 // weapons
 class Weapon {
@@ -139,20 +117,40 @@ class Weapon {
 }
 // sword
 let swordImg = document.createElement("img");
-swordImg.src = 'assets/img/knight.png';
+swordImg.src = 'assets/img/sword.png';
 swordImg.id = 'sword';
 swordImg.className = 'weapon1'
 
 // fire
 let fireImg = document.createElement("img");
-fireImg.src = 'assets/img/knight.png';
+fireImg.src = 'assets/img/fire.png';
 fireImg.id = 'fire';
 fireImg.className = 'weapon2'
 
 let sword = new Weapon ("sword",10,swordImg);
-let fire = new Weapon ("fire",fireImg);
+let fire = new Weapon ("fire",10,fireImg);
 
-let weapon = (sword);
+let weapon = (sword,fire);
+
+function placeWeapons () {
+	for(let i = 0; i < 12; i++) {
+		this.createWeapon(weapon);
+	}
+}
+
+function createWeapon() {
+	let coordinates = {
+		x: this.randomNum(),
+		y: this.randomNum()
+	};
+	let hasWeapon = $(`[data-row="${coordinates.row}"][data-column="${coordinates.column}"]`).hasClass("weapon");
+	if (hasWeapon) {
+		return this.createWeapon(weapon);
+	} else {
+		$(`[data-row="${coordinates.row}"][data-column="${coordinates.column}"]`).addClass("weapon");
+	}
+}
+
 
 
 // Game movements
@@ -171,23 +169,10 @@ $(window).on("load", function() {
 				placePlayers(dragon);
 				placeBarriers(wall);
 				placeWeapons(sword);
+				placeWeapons(fire);
 				console.log(barrier);
 				console.log(weapon);
 				console.log(player)
 		});     
 });
 
-
-// function createBarrier (barrier) {
-// 	// position 
-// 	// new Barrier(wallImg);
-// 	// each barrier should have its own img element
-// 	// daily updates - progress, where you stuck, what im trying to achieve and what ive tried already 
-// 	// get createbarrier working, understand every line.
-// 	let coordinates = {
-// 		x: this.randomNum(),
-// 		y: this.randomNum()
-// 	  };
-// 	barrier.barrierPos = coordinates;
-// 	placeImg(barrier.barrierImage,barrier.barrierPos);
-// }
