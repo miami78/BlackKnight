@@ -72,9 +72,9 @@ let player = (knight,dragon);
 
 // barriers
 class Barrier {
-	constructor(barrierImage,barrierPos) {
-		this.barrierImage = barrierImage;
-		this.barrierPos = barrierPos;
+	constructor(image,position) {
+		this.barrierImage = image;
+		this.barrierPos = position;
 	}
 }
 
@@ -88,7 +88,7 @@ let wall = new Barrier(wallImg, {row:0,column:0});
 // let tree = new Barrier();
 let barrier = (wall)
 // create barriers and place them at random squares
-function createBarrier() {
+function createBarrier(barrier) {
 	let coordinates = {
 		row: this.randomNum(),
 		column: this.randomNum()
@@ -103,7 +103,7 @@ function createBarrier() {
 
 function placeBarriers() {
 	for(let i = 0; i < 12; i++) {
-		this.createBarrier(barrier);
+		this.createBarrier();
 	}
 }
 
@@ -138,7 +138,7 @@ function placeWeapons () {
 	}
 }
 
-function createWeapon() {
+function createWeapon(weapon) {
 	let coordinates = {
 		x: this.randomNum(),
 		y: this.randomNum()
@@ -147,17 +147,15 @@ function createWeapon() {
 	if (hasWeapon) {
 		return this.createWeapon(weapon);
 	} else {
-		$(`[data-row="${coordinates.row}"][data-column="${coordinates.column}"]`).addClass("weapon");
+		$(`[data-row="${coordinates.row}"][data-column="${coordinates.column}"]`).addClass("weapon occupied");
 	}
 }
-
-
 
 // Game movements
 function movePlayer () {
 	var playerMove = document.getElementById("knight");
 	playerMove.onclick = function() {
-		move(this);
+		
 	};
 }
 // function that only places instead of creating

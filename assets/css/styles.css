@@ -113,4 +113,12 @@ border-radius: 7px ;
 	height: auto;
 	margin: auto;
 }
+.barrier {
+	background-image: url('../img/wall.png')
+  }
+
+/* .weapon {
+background-image: url('../img/sword.png')
+} */
+
 
