@@ -93,9 +93,7 @@ border-radius: 7px ;
 }
 
 .name {
-	width: 80%;
-	height: auto;
-	margin: 5% auto;
+	font-weight: bold;
 }
 
 .input {
