@@ -115,8 +115,8 @@ border-radius: 7px ;
 	background-image: url('../img/wall.png')
   }
 
-/* .weapon {
-background-image: url('../img/sword.png')
-} */
+.weapon {
+	background-image: url('../img/sword.png')
+}
 
 

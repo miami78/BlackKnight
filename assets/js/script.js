@@ -134,14 +134,14 @@ let weapon = (sword,fire);
 
 function placeWeapons () {
 	for(let i = 0; i < 12; i++) {
-		this.createWeapon(weapon);
+		this.createWeapon();
 	}
 }
 
 function createWeapon(weapon) {
 	let coordinates = {
-		x: this.randomNum(),
-		y: this.randomNum()
+		row: this.randomNum(),
+		column: this.randomNum()
 	};
 	let hasWeapon = $(`[data-row="${coordinates.row}"][data-column="${coordinates.column}"]`).hasClass("weapon");
 	if (hasWeapon) {
@@ -151,18 +151,52 @@ function createWeapon(weapon) {
 	}
 }
 
-// Game movements
-function movePlayer () {
-	var playerMove = document.getElementById("knight");
-	playerMove.onclick = function() {
-		
+let activePlayer = knight;
+
+function getCell () {
+	let coordinates = {
+		row: this.randomNum(),
+		column: this.randomNum()
 	};
+	return getCell(coordinates.row, coordinates.column);
 }
+
+function moveTo (newPosition) {
+	// let coordinates = {
+	// 	row: this.randomNum(),
+	// 	column: this.randomNum()
+	// };
+	// let lastPosition = coordinates;
+	// lastPosition = Object.assign({}, coordinates);
+	// coordinates = newPosition;
+	// set active player position to new position(param)
+	$(`[data-row="${newPosition.row}"][data-column="${newPosition.column}"]`).addClass(activePlayer.playerName).addClass("taken");
+	console.log(activePlayer.playerPos)
+	console.log(newPosition);
+	placeImg(activePlayer.playerImage, newPosition);
+	activePlayer.playerPos = newPosition;
+
+}
+function movePlayer(event){
+		const element = event.target;
+		console.log(element);
+		const newPosition = {
+			column: (element.dataset.column),
+          	row: (element.dataset.row)
+		}
+		console.log(newPosition)
+		moveTo(newPosition);
+}
+
 // function that only places instead of creating
 // Start new game on z
 $(window).on("load", function() {
 		document.getElementById("newGameBtn").addEventListener("click", function() {
 				createGrid();
+					$('.grid-item').click(function(e) {
+						console.log('click');
+						movePlayer(e)
+					})
 				placePlayers(knight);
 				placePlayers(dragon);
 				placeBarriers(wall);
