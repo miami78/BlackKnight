@@ -11,7 +11,6 @@ function createGrid() {
 		}
 	}
 }
-
 // Random number function
 function randomNum() {
 	return Math.floor(Math.random() * (11 - 1) + 1);
@@ -153,14 +152,6 @@ function createWeapon(weapon) {
 
 let activePlayer = knight;
 
-function getCell () {
-	let coordinates = {
-		row: this.randomNum(),
-		column: this.randomNum()
-	};
-	return getCell(coordinates.row, coordinates.column);
-}
-
 function moveTo (newPosition) {
 	// let coordinates = {
 	// 	row: this.randomNum(),
@@ -187,9 +178,13 @@ function movePlayer(event){
 		console.log(newPosition)
 		moveTo(newPosition);
 }
-
-// function that only places instead of creating
-// Start new game on z
+function highlightBox(){
+	
+}
+// Showing available movement fields on a game board for active player
+function showMovementField(){
+//add css class classList.add ("highlight")
+}
 $(window).on("load", function() {
 		document.getElementById("newGameBtn").addEventListener("click", function() {
 				createGrid();

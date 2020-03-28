@@ -119,4 +119,8 @@ border-radius: 7px ;
 	background-image: url('../img/sword.png')
 }
 
+.highlight {
+	box-shadow: inset 0px 0 10px 1px #e0e0e0;
+  }
+
 
