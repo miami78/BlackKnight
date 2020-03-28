@@ -31,14 +31,14 @@ img{
 }
 
 /* =========== GRID ========== */
-.grid {
+#grid {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
 
-.grid-container {
+#grid-container {
 display: grid;
 grid-template-rows: repeat(10, 9vh);
 grid-template-columns: repeat(10, 9vh);
