@@ -1,7 +1,7 @@
 (function() {
 // Random number function
-game.prototype.randomNum = function() {
-	return Math.floor(Math.random() * (11 - 1) + 1);
+const randomNum = function() {
+	return Math.floor(Math.random() * (10 - 1) + 1);
 }
 // Function to get cell position
 function getPosition(colPosition, rowPosition) {
@@ -31,10 +31,12 @@ function game() {
 const DEFAULT_WEAPON = 'sword';
 game.WEAPONS = {
     sword: {
+        key: 'sword',
         position: null,
         damage: 5
     },
     fire: {
+        key: 'fire',
         position: null,
         damage: 5
     }
@@ -61,12 +63,12 @@ game.prototype.createGrid = function() {
 game.prototype.isPositionAvailable = function(coordinates,callBack) {
     const cell =  getPosition(coordinates.row, coordinates.col);
     if(cell.classList.contains('taken')){
-        alert('position taken');
+        console.log('position taken');
         callBack && callBack();
         return false;
     }
-    return false;
-}
+    return true;
+};
 
 game.prototype.putClass = function(coordinates,newClass,available) {
     const cell = getPosition(coordinates.row, coordinates.col);
@@ -75,9 +77,11 @@ game.prototype.putClass = function(coordinates,newClass,available) {
 };
 
 game.prototype.placeBarrier = function() {
-    let coordinates = {
-        row: this.randomNum(),
-        col: this.randomNum()
+    const colPosition = randomNum();
+    const rowPosition = randomNum();
+    const coordinates = {
+      col: colPosition,
+      row: rowPosition,
     };
     const self = this;
     const available = this.isPositionAvailable(coordinates, function() {
@@ -88,18 +92,16 @@ game.prototype.placeBarrier = function() {
         this.putClass(coordinates, 'barrier');
     }
 };
-// Loop to place barriers
-game.prototype.createBarrier = function(){
-    for (let i = 0; i < 12; i++) {
-        this.placeBarrier([i]);
-    }
-}
+
 game.prototype.placeWeapon = function(weapon) {
-    let coordinates = {
-        row: this.randomNum(),
-        col: this.randomNum()
+    const colPosition = randomNum();
+    const rowPosition = randomNum();
+    const coordinates = {
+      col: colPosition,
+      row: rowPosition,
     };
     const self = this;
+
     const available = this.isPositionAvailable(coordinates, function() {
         self.placeWeapon(weapon);
     });
@@ -110,9 +112,11 @@ game.prototype.placeWeapon = function(weapon) {
 }
 
 game.prototype.placePlayer = function (player) {
-    let coordinates = {
-        row: this.randomNum(),
-        col: this.randomNum()
+    const colPosition = randomNum();
+    const rowPosition = randomNum();
+    const coordinates = {
+      col: colPosition,
+      row: rowPosition,
     };
     const self = this;
     const available = this.isPositionAvailable(coordinates, function() {
@@ -126,13 +130,18 @@ game.prototype.placePlayer = function (player) {
 game.prototype.gameSetup = function() {
     this.barriers = [];
     this.createGrid();
-    this.createBarrier();
+    for (let i = 0; i < 13; i++) {
+        this.placeBarrier([i]);
+      }
     this.player1 = this.createPlayer1();
     this.placePlayer(this.player1);
     this.player2 = this.createPlayer2();
     this.placePlayer(this.player2);
     this.placeWeapon('sword');
     this.placeWeapon('fire');
+    console.log(this.player1)
+    console.log(this.barriers)
+    console.log(this.weapons)
 };
 
 const newGame = new game();
