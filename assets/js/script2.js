@@ -118,9 +118,9 @@ game.prototype.placePlayer = function (player) {
       col: colPosition,
       row: rowPosition,
     };
-    const self = this;
+    const me = this;
     const available = this.isPositionAvailable(coordinates, function() {
-        this.placePlayer(player);
+        me.placePlayer(player);
     });
     if(available) {
         this.putClass(coordinates, player.name);
@@ -143,7 +143,10 @@ game.prototype.gameSetup = function() {
     console.log(this.barriers)
     console.log(this.weapons)
 };
-
-const newGame = new game();
-newGame.gameSetup();
+$(window).on("load", function() {
+    document.getElementById("newGameBtn").addEventListener("click", function() {
+        const newGame = new game();
+        newGame.gameSetup();
+    });     
+});
 })();
