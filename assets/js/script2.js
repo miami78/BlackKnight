@@ -1,3 +1,26 @@
+// Function to place game setup
+function gameSetup() {
+    this.gridContainer = document.getElementById('grid-container');
+    this.player1 = null;
+    this.player2 = null;
+    this.barriers = [];
+    this.weapons = gameSetup.WEAPONS;
+    this.activePlayer = 'player1';
+    
+    const self = this;
+}
+
+gameSetup.WEAPONS = {
+    sword: {
+        position: null,
+        damage: 5
+    },
+    fire: {
+        position: null,
+        damage: 5
+    }
+};
+
 // Function to draw the grid
 function createGrid() {
     for(let row = 1; row < 11; row++){                
@@ -14,3 +37,5 @@ function randomNum() {
 function getPosition(rowPosition, colPosition) {
     return $(`[data-row="${rowPosition}"][data-column="${colPosition}"]`);
 }
+
+createGrid();
