@@ -111,16 +111,33 @@ border-radius: 7px ;
 	height: auto;
 	margin: auto;
 }
-.barrier {
-	background-image: url('../img/wall.png')
-  }
-
-.weapon {
-	background-image: url('../img/sword.png')
-}
 
 .highlight {
 	box-shadow: inset 0px 0 10px 1px #e0e0e0;
   }
 
+/* WEAPONS */
+.sword {
+	background-image: url('../img/sword.png')
+}
+.fire {
+	background-image: url('../img/sword.png')
+}
 
+/* PLAYERS */
+.player1 {
+	background-image: url('../img/player1.png');
+	background-size: 110%;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+.player2 {
+	background-image: url('../img/player2.png');
+	background-size: 110%;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.barrier {
+	background-image: url('../img/wall.png')
+}

@@ -13,7 +13,7 @@ const DEFAULT_POSITION = {col: 0,row: 0,}
 
 function Player(name,weapon) {
     this.name = name;
-    this.weapon = game.DEFAULT_WEAPON[weapon];
+    this.weapon = game.WEAPONS[weapon];
     this.position = DEFAULT_POSITION;
     this.lastPosition = DEFAULT_POSITION;
 }
