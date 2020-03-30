@@ -201,9 +201,9 @@ game.prototype.tryMoveActivePlayer = function (newPossiblePosition){
     this.tryMovePlayer(this[this.activePlayer], newPossiblePosition);
 };
 // highlight function 
-game.prototype.showMoves = function(position,player){
-    console.log(position)
-    const cell = player.canMoveTo(position.validColPosition, position.validRowPosition);
+game.prototype.showMoves = function(newPossiblePosition, player){
+    console.log(newPossiblePosition)
+    const cell = player.canMoveTo(newPossiblePosition.validColPosition, newPossiblePosition.validRowPosition);
     cell.classList.add('highlight');
 }
 
