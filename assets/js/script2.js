@@ -21,16 +21,12 @@ function game() {
 
     $(this.gridContainer).click(function(e) {
         const element = e.target;
-        const newPosition = {
+        const newPossiblePosition = {
           col: Number(element.dataset.col),
           row: Number(element.dataset.row),
         };
-        if ('player1' === self.activePlayer) {
-            self.movePlayer(self.player1,newPosition);
-            console.log(newPosition);
-        } else {
-            self.movePlayer(self.player2,newPosition);
-        } 
+        self.tryMoveActivePlayer(newPossiblePosition);
+        self.showMoves(newPossiblePosition);
       });
 }
 
@@ -95,7 +91,6 @@ game.prototype.isPositionAvailable = function(position,callBack) {
 };
 // Puts a new class if cell is available
 game.prototype.putClass = function(position,newClass,available) {
-    
     const cell = getPosition(position.col, position.row);
     cell.classList.add(newClass);
     !available && cell.classList.add('taken');
@@ -159,7 +154,7 @@ game.prototype.placePlayer = function (player) {
     });
     if(available) {
         this.putClass(position, player.name);
-        player.position = position;
+        player.moveTo (position, true);
     }
 };
 // Moves player to new position
@@ -189,9 +184,27 @@ Player.prototype.canMoveTo = function(newPossiblePosition,callBack){
     canMove && callBack && callBack();
     return canMove;
 }
+
+game.prototype.tryMovePlayer = function(player, newPossiblePosition) {
+    const self = this;
+    player.canMoveTo(newPossiblePosition, function() {
+      if (
+        self.isPositionAvailable(newPossiblePosition) //&&
+        // !self.hasBarriers(player.position, newPossiblePosition)
+      ) {
+        self.movePlayer(player, newPossiblePosition);
+      }
+    });
+  };
+
+game.prototype.tryMoveActivePlayer = function (newPossiblePosition){
+    this.tryMovePlayer(this[this.activePlayer], newPossiblePosition);
+};
 // highlight function 
-game.prototype.showMoves = function(){
-    
+game.prototype.showMoves = function(position,player){
+    console.log(position)
+    const cell = player.canMoveTo(position.validColPosition, position.validRowPosition);
+    cell.classList.add('highlight');
 }
 
 game.prototype.gameSetup = function() {
