@@ -113,15 +113,17 @@ border-radius: 7px ;
 }
 
 .highlight {
-	box-shadow: inset 0px 0 10px 1px #e0e0e0;
-  }
+	/* box-shadow: inset 0px 0 10px 1px #b1b0b0; */
+	background-color: #d32323;
+	cursor: pointer;
+}
 
 /* WEAPONS */
 .sword {
 	background-image: url('../img/sword.png')
 }
 .fire {
-	background-image: url('../img/sword.png')
+	background-image: url('../img/fire.png')
 }
 
 /* PLAYERS */

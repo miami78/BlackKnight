@@ -5,19 +5,10 @@ const randomNum = function() {
 }
 // Function to get cell position
 function getPosition(colPosition, rowPosition) {
-    return document.querySelectorAll(
-        `div[data-col="${colPosition}"][data-row="${rowPosition}"]`,
-        )[0];
+    return $(`div[data-col="${colPosition}"][data-row="${rowPosition}"]`)[0];
 }
-const DEFAULT_POSITION = {col: 0,row: 0,}
 
-function Player(name,weapon) {
-    this.name = name;
-    this.weapon = game.WEAPONS[weapon];
-    this.position = DEFAULT_POSITION;
-    this.lastPosition = DEFAULT_POSITION;
-}
-// Function to place game setup
+// Game object constructor
 function game() {
     this.gridContainer = document.getElementById('grid-container');
     this.player1 = null;
@@ -27,7 +18,22 @@ function game() {
     this.activePlayer = 'player1';
     
     const self = this;
+
+    $(this.gridContainer).click(function(e) {
+        const element = e.target;
+        const newPosition = {
+          col: Number(element.dataset.col),
+          row: Number(element.dataset.row),
+        };
+        if ('player1' === self.activePlayer) {
+            self.movePlayer(self.player1,newPosition);
+            console.log(newPosition);
+        } else {
+            self.movePlayer(self.player2,newPosition);
+        } 
+      });
 }
+
 const DEFAULT_WEAPON = 'sword';
 game.WEAPONS = {
     sword: {
@@ -41,14 +47,19 @@ game.WEAPONS = {
         damage: 5
     }
 };
+// https://www.w3schools.com/js/js_object_prototypes.asp
+// Prototypes are the mechanism by which JavaScript objects inherit features from one another. 
+// The JavaScript prototype property allows you to add new properties to object constructors,
+// it also allows you to add new methods to objects constructors.
 
+// Function to create player
 game.prototype.createPlayer1 = function() {
     return new Player('player1', DEFAULT_WEAPON);
 };
-
 game.prototype.createPlayer2 = function() {
     return new Player('player2', DEFAULT_WEAPON);
 };
+
 // Function to draw the grid
 game.prototype.createGrid = function() {
     let cells = '';
@@ -60,8 +71,21 @@ game.prototype.createGrid = function() {
     this.gridContainer.innerHTML = cells;
 };
 
-game.prototype.isPositionAvailable = function(coordinates,callBack) {
-    const cell =  getPosition(coordinates.row, coordinates.col);
+// Player constructor
+function Player(name, weapon) {
+    this.name = name;
+    this.weapon = game.WEAPONS[weapon];
+    this.position = {col: 1,row: 1};
+    this.health = 100;
+    this.active = false;
+}
+// Get players position
+Player.prototype.getPosition = function() {
+    return getPosition(this.position.col, this.position.row);
+};
+// Checks if position is available
+game.prototype.isPositionAvailable = function(position,callBack) {
+    const cell =  getPosition(position.col, position.row);
     if(cell.classList.contains('taken')){
         console.log('position taken');
         callBack && callBack();
@@ -69,71 +93,117 @@ game.prototype.isPositionAvailable = function(coordinates,callBack) {
     }
     return true;
 };
-
-game.prototype.putClass = function(coordinates,newClass,available) {
-    const cell = getPosition(coordinates.row, coordinates.col);
+// Puts a new class if cell is available
+game.prototype.putClass = function(position,newClass,available) {
+    
+    const cell = getPosition(position.col, position.row);
     cell.classList.add(newClass);
     !available && cell.classList.add('taken');
 };
 
+game.prototype.removeClass = function(position, classToRemove) {
+    const cell = getPosition(position.col, position.row);
+    cell.classList.remove(classToRemove);
+    cell.classList.remove('taken');
+};
+// Place barriers
 game.prototype.placeBarrier = function() {
     const colPosition = randomNum();
     const rowPosition = randomNum();
-    const coordinates = {
+    const position = {
       col: colPosition,
       row: rowPosition,
     };
     const self = this;
-    const available = this.isPositionAvailable(coordinates, function() {
+    const available = this.isPositionAvailable(position, function() {
         self.placeBarrier();
     });
     if(available) {
-        this.barriers.push(coordinates);
-        this.putClass(coordinates, 'barrier');
+        this.barriers.push(position);
+        this.putClass(position, 'barrier');
     }
 };
 
+// game.prototype.hasBarriers = function(oldPosition, newPosition) {
+//     const direction = newPosition.col == oldPosition.col ? 'row' : 'col';
+//     const
+// }
 game.prototype.placeWeapon = function(weapon) {
     const colPosition = randomNum();
     const rowPosition = randomNum();
-    const coordinates = {
+    const position = {
       col: colPosition,
       row: rowPosition,
     };
     const self = this;
 
-    const available = this.isPositionAvailable(coordinates, function() {
+    const available = this.isPositionAvailable(position, function() {
         self.placeWeapon(weapon);
     });
     if(available) {
-        this.weapons[weapon].coordinates = coordinates;
-        this.putClass(coordinates, weapon, true)
+        this.weapons[weapon].position = position;
+        this.putClass(position, weapon, true)
     }
 }
 
 game.prototype.placePlayer = function (player) {
     const colPosition = randomNum();
     const rowPosition = randomNum();
-    const coordinates = {
+    const position = {
       col: colPosition,
       row: rowPosition,
     };
     const me = this;
-    const available = this.isPositionAvailable(coordinates, function() {
+    const available = this.isPositionAvailable(position, function() {
         me.placePlayer(player);
     });
     if(available) {
-        this.putClass(coordinates, player.name);
+        this.putClass(position, player.name);
+        player.position = position;
     }
 };
+// Moves player to new position
+Player.prototype.moveTo = function(newPosition) {
+    this.lastPosition = Object.assign({}, this.position);
+    this.position = newPosition;
+};
+
+game.prototype.movePlayer = function(player, newPosition) {
+    console.log(player)
+    this.removeClass(player.position, player.name);
+    this.putClass(newPosition, player.name);
+    player.moveTo(newPosition)
+    console.log(newPosition)
+}
+
+// checks if player can move within 3 spaces
+Player.prototype.canMoveTo = function(newPossiblePosition,callBack){
+    const direction = newPossiblePosition.col === this.position.col ? 'row' : 'col';
+    const differentCol = Math.abs(this.position.col - newPossiblePosition.col);
+    const differentRow = Math.abs(this.position.row - newPossiblePosition.row);
+
+    const validColPosition = direction === 'col' && differentCol <= 3 && differentRow === 0;
+    const validRowPosition = direction === 'row' && differentRow <= 3 && differentCol === 0;
+
+    const canMove = validColPosition || validRowPosition;
+    canMove && callBack && callBack();
+    return canMove;
+}
+// highlight function 
+game.prototype.showMoves = function(){
+    
+}
 
 game.prototype.gameSetup = function() {
     this.barriers = [];
+    this.weapons = game.WEAPONS;
+    this.activePlayer = 'player1';
     this.createGrid();
     for (let i = 0; i < 13; i++) {
         this.placeBarrier([i]);
       }
     this.player1 = this.createPlayer1();
+    this.player1.activePlayer = true;
     this.placePlayer(this.player1);
     this.player2 = this.createPlayer2();
     this.placePlayer(this.player2);
@@ -143,6 +213,7 @@ game.prototype.gameSetup = function() {
     console.log(this.barriers)
     console.log(this.weapons)
 };
+
 $(window).on("load", function() {
     document.getElementById("newGameBtn").addEventListener("click", function() {
         const newGame = new game();
