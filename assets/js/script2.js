@@ -26,7 +26,6 @@ function game() {
           row: Number(element.dataset.row),
         };
         self.tryMoveActivePlayer(newPossiblePosition);
-        self.showMoves(newPossiblePosition);
       });
 }
 
@@ -91,6 +90,7 @@ game.prototype.isPositionAvailable = function(position,callBack) {
 };
 // Puts a new class if cell is available
 game.prototype.putClass = function(position,newClass,available) {
+    console.log(newClass)
     const cell = getPosition(position.col, position.row);
     cell.classList.add(newClass);
     !available && cell.classList.add('taken');
@@ -159,7 +159,9 @@ game.prototype.placePlayer = function (player) {
 };
 // Moves player to new position
 Player.prototype.moveTo = function(newPosition) {
+    console.log(newPosition)
     this.lastPosition = Object.assign({}, this.position);
+    console.log(this.lastPosition)
     this.position = newPosition;
 };
 
@@ -189,8 +191,9 @@ game.prototype.tryMovePlayer = function(player, newPossiblePosition) {
     const self = this;
     player.canMoveTo(newPossiblePosition, function() {
       if (
-        self.isPositionAvailable(newPossiblePosition) //&&
+        self.isPositionAvailable(newPossiblePosition) &&
         // !self.hasBarriers(player.position, newPossiblePosition)
+        self.showMoves(newPossiblePosition)
       ) {
         self.movePlayer(player, newPossiblePosition);
       }
@@ -200,10 +203,11 @@ game.prototype.tryMovePlayer = function(player, newPossiblePosition) {
 game.prototype.tryMoveActivePlayer = function (newPossiblePosition){
     this.tryMovePlayer(this[this.activePlayer], newPossiblePosition);
 };
+
 // highlight function 
-game.prototype.showMoves = function(newPossiblePosition, player){
-    console.log(newPossiblePosition)
-    const cell = player.canMoveTo(newPossiblePosition.validColPosition, newPossiblePosition.validRowPosition);
+game.prototype.showMoves = function(position){
+    console.log(position)
+    const cell = getPosition(position.col, position.row);
     cell.classList.add('highlight');
 }
 
