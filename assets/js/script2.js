@@ -15,7 +15,7 @@ function game() {
     this.player2 = null;
     this.barriers = [];
     this.weapons = game.WEAPONS;
-    this.activePlayer = 'player1';
+    this.activePlayer = this.player1;
     
     const self = this;
 
@@ -98,6 +98,7 @@ game.prototype.putClass = function(position,newClass,available) {
 
 game.prototype.removeClass = function(position, classToRemove) {
     const cell = getPosition(position.col, position.row);
+    console.log(cell);
     cell.classList.remove(classToRemove);
     cell.classList.remove('taken');
 };
@@ -153,6 +154,7 @@ game.prototype.placePlayer = function (player) {
         me.placePlayer(player);
     });
     if(available) {
+        
         this.putClass(position, player.name);
         player.moveTo (position, true);
     }
@@ -191,9 +193,8 @@ game.prototype.tryMovePlayer = function(player, newPossiblePosition) {
     const self = this;
     player.canMoveTo(newPossiblePosition, function() {
       if (
-        self.isPositionAvailable(newPossiblePosition) &&
+        self.isPositionAvailable(newPossiblePosition) //&&
         // !self.hasBarriers(player.position, newPossiblePosition)
-        self.showMoves(newPossiblePosition)
       ) {
         self.movePlayer(player, newPossiblePosition);
       }
@@ -201,20 +202,37 @@ game.prototype.tryMovePlayer = function(player, newPossiblePosition) {
   };
 
 game.prototype.tryMoveActivePlayer = function (newPossiblePosition){
-    this.tryMovePlayer(this[this.activePlayer], newPossiblePosition);
+    this.tryMovePlayer(this.activePlayer, newPossiblePosition);
+    console.log(this.activePlayer)
 };
 
 // highlight function 
-game.prototype.showMoves = function(position){
+game.prototype.showMove = function(position){
     console.log(position)
     const cell = getPosition(position.col, position.row);
     cell.classList.add('highlight');
 }
 
+game.prototype.showAllMoves = function(position){
+    const downPosition = position;
+    const rightPosition = position;
+    for (let rows = 0; rows < 3; rows++) {
+        // down
+        if (downPosition.row > 1 && downPosition.row < 11){
+            downPosition.row += 1;
+            this.showMove(downPosition);
+        };
+        // right
+        // if (rightPosition.col > 1 && rightPosition.col < 11) {
+        //     rightPosition.col += 1;
+        //     this.showMove(rightPosition);
+        // } 
+    };
+}
+
 game.prototype.gameSetup = function() {
     this.barriers = [];
     this.weapons = game.WEAPONS;
-    this.activePlayer = 'player1';
     this.createGrid();
     for (let i = 0; i < 13; i++) {
         this.placeBarrier([i]);
@@ -222,6 +240,8 @@ game.prototype.gameSetup = function() {
     this.player1 = this.createPlayer1();
     this.player1.activePlayer = true;
     this.placePlayer(this.player1);
+    this.activePlayer = this.player1;
+    this.showAllMoves(this.player1.position);
     this.player2 = this.createPlayer2();
     this.placePlayer(this.player2);
     this.placeWeapon('sword');
