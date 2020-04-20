@@ -1,8 +1,10 @@
+/*jshint esversion: 6 */
+/*jshint -W030 */
 (function() {
 // Random number function
 const randomNum = function() {
 	return Math.floor(Math.random() * (10 - 1) + 1);
-}
+};
 // Function to get cell position
 function getPosition(colPosition, rowPosition) {
     return $(`div[data-col="${colPosition}"][data-row="${rowPosition}"]`)[0];
@@ -90,7 +92,7 @@ game.prototype.isPositionAvailable = function(position,callBack) {
 };
 // Puts a new class if cell is available
 game.prototype.putClass = function(position,newClass,available) {
-    console.log(newClass)
+    console.log(newClass);
     const cell = getPosition(position.col, position.row);
     cell.classList.add(newClass);
     !available && cell.classList.add('taken');
@@ -138,9 +140,9 @@ game.prototype.placeWeapon = function(weapon) {
     });
     if(available) {
         this.weapons[weapon].position = position;
-        this.putClass(position, weapon, true)
+        this.putClass(position, weapon, true);
     }
-}
+};
 
 game.prototype.placePlayer = function (player) {
     const colPosition = randomNum();
@@ -161,19 +163,19 @@ game.prototype.placePlayer = function (player) {
 };
 // Moves player to new position
 Player.prototype.moveTo = function(newPosition) {
-    console.log(newPosition)
+    console.log(newPosition);
     this.lastPosition = Object.assign({}, this.position);
-    console.log(this.lastPosition)
+    console.log(this.lastPosition);
     this.position = newPosition;
 };
 
 game.prototype.movePlayer = function(player, newPosition) {
-    console.log(player)
+    console.log(player);
     this.removeClass(player.position, player.name);
     this.putClass(newPosition, player.name);
-    player.moveTo(newPosition)
-    console.log(newPosition)
-}
+    player.moveTo(newPosition);
+    console.log(newPosition);
+};
 
 // checks if player can move within 3 spaces
 Player.prototype.canMoveTo = function(newPossiblePosition,callBack){
@@ -187,48 +189,88 @@ Player.prototype.canMoveTo = function(newPossiblePosition,callBack){
     const canMove = validColPosition || validRowPosition;
     canMove && callBack && callBack();
     return canMove;
-}
+};
 
 game.prototype.tryMovePlayer = function(player, newPossiblePosition) {
     const self = this;
-    player.canMoveTo(newPossiblePosition, function() {
-      if (
-        self.isPositionAvailable(newPossiblePosition) //&&
-        // !self.hasBarriers(player.position, newPossiblePosition)
-      ) {
+    // player.canMoveTo(newPossiblePosition, function() {
+    //   if (
+    //     self.isPositionAvailable(newPossiblePosition) //&&
+    //     // !self.hasBarriers(player.position, newPossiblePosition)
+    //   ) {
+    //     self.movePlayer(player, newPossiblePosition);
+    //   }
+    // });
+    const cell = getPosition(newPossiblePosition.col, newPossiblePosition.row);
+    if (cell.classList.contains('highlight')) {
         self.movePlayer(player, newPossiblePosition);
-      }
-    });
+        // Remove highlight class
+        self.showAllMoves(newPossiblePosition);
+    }
   };
-
+// Remove highlight class from all elements in
+// need to get all elements with that class
 game.prototype.tryMoveActivePlayer = function (newPossiblePosition){
     this.tryMovePlayer(this.activePlayer, newPossiblePosition);
-    console.log(this.activePlayer)
+    console.log(this.activePlayer);
 };
 
 // highlight function 
 game.prototype.showMove = function(position){
-    console.log(position)
     const cell = getPosition(position.col, position.row);
     cell.classList.add('highlight');
-}
+};
+
 
 game.prototype.showAllMoves = function(position){
-    const downPosition = position;
-    const rightPosition = position;
-    for (let rows = 0; rows < 3; rows++) {
-        // down
-        if (downPosition.row > 1 && downPosition.row < 11){
-            downPosition.row += 1;
-            this.showMove(downPosition);
-        };
-        // right
-        // if (rightPosition.col > 1 && rightPosition.col < 11) {
-        //     rightPosition.col += 1;
-        //     this.showMove(rightPosition);
-        // } 
+    let newPosition = {
+      col: position.col,
+      row: position.row,
     };
-}
+    for (let i = 0; i < 3; i++) {
+        // down
+        newPosition.row += 1;
+        if (newPosition.row > 0 && newPosition.row < 11){
+            this.showMove(newPosition);
+        } else {
+            break;
+        }
+    }
+    newPosition.row = position.row;
+
+    for (let i = 0; i < 3; i++) {
+        // right
+        newPosition.col += 1;
+        if (newPosition.col > 0 && newPosition.col < 11){
+            this.showMove(newPosition);
+        } else {
+            break;
+        }
+    }
+    newPosition.col = position.col;
+
+    for (let i = 0; i < 3; i++) {
+        // up
+        newPosition.row -= 1;
+        if (newPosition.row > 0 && newPosition.row < 11){
+            this.showMove(newPosition);
+        } else {
+            break;
+        }
+    }
+    newPosition.row = position.row;
+
+    for (let i = 0; i < 3; i++) {
+        // left
+        newPosition.col -= 1;
+        if (newPosition.col > 0 && newPosition.col < 11){
+            this.showMove(newPosition);
+        } else {
+            break;
+        }
+    }
+    newPosition.col = position.col;
+};
 
 game.prototype.gameSetup = function() {
     this.barriers = [];
@@ -246,9 +288,9 @@ game.prototype.gameSetup = function() {
     this.placePlayer(this.player2);
     this.placeWeapon('sword');
     this.placeWeapon('fire');
-    console.log(this.player1)
-    console.log(this.barriers)
-    console.log(this.weapons)
+    console.log(this.player1);
+    console.log(this.barriers);
+    console.log(this.weapons);  
 };
 
 $(window).on("load", function() {
