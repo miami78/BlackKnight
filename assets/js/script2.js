@@ -208,8 +208,7 @@ game.prototype.tryMovePlayer = function(player, newPossiblePosition) {
         self.showAllMoves(newPossiblePosition);
     }
   };
-// Remove highlight class from all elements in
-// need to get all elements with that class
+  
 game.prototype.tryMoveActivePlayer = function (newPossiblePosition){
     this.tryMovePlayer(this.activePlayer, newPossiblePosition);
     console.log(this.activePlayer);
@@ -221,7 +220,15 @@ game.prototype.showMove = function(position){
     cell.classList.add('highlight');
 };
 
-
+//Remove highlight function
+game.prototype.removeShowMove = function(newPossiblePosition,classToRemove){
+    const self = this;
+    const cell = getPosition(newPossiblePosition.col, newPossiblePosition.row);
+    if (cell.classList.contains('highlight')) {
+       self.removeClass(classToRemove);
+    }
+};
+// shows possible moves north south west and east of players position
 game.prototype.showAllMoves = function(position){
     let newPosition = {
       col: position.col,
