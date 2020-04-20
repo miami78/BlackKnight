@@ -113,10 +113,35 @@ border-radius: 7px ;
 }
 
 .highlight {
-	/* box-shadow: inset 0px 0 10px 1px #b1b0b0; */
-	background-color: #d32323;
 	cursor: pointer;
+	
+	animation: pulse 2s infinite;
+	transform: scale(1);
+	animation: pulse 1s infinite;
 }
+
+@keyframes pulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: inset 0px 0 10px 1px #5e72e4;
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: inset 0px 0 10px 1px #5e72e4;
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: inset 0px 0 10px 1px #5e72e4;
+	}
+}
+
+.highlight:hover {
+	animation: none;
+  }
+
+
 
 /* WEAPONS */
 .sword {
