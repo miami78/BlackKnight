@@ -122,10 +122,37 @@ game.prototype.placeBarrier = function() {
     }
 };
 
-// game.prototype.hasBarriers = function(oldPosition, newPosition) {
-//     const direction = newPosition.col == oldPosition.col ? 'row' : 'col';
-//     const
-// }
+game.prototype.hasBarriers = function(fromPosition, toPosition) {
+    const direction = toPosition.col == fromPosition.col ? 'row' : 'col';
+    const diff = direction === 'col'
+      ? fromPosition.col - toPosition.col
+      : fromPosition.row - toPosition.row;
+
+    let col = direction === 'col' ? fromPosition.col - 1 : fromPosition.col;
+    let row = direction === 'row' ? fromPosition.row - 1 : fromPosition.row;
+
+    if (diff < 0) {
+      col = direction === 'col' ? fromPosition.col + 1 : fromPosition.col;
+      row = direction === 'row' ? fromPosition.row + 1 : fromPosition.row;
+    }
+
+    const fromPositionWay = { col: col, row: row };
+
+    const cell = getPosition(fromPositionWay.col, fromPositionWay.row);
+    if (!cell) {
+      return false;
+    }
+    if (cell.classList.contains('barrier')) {
+      return true;
+    }
+
+    if (Math.abs(diff) !== Math.abs(fromPosition[direction] - fromPositionWay[direction])) {
+      return this.hasBarriers(fromPositionWay, toPosition);
+    }
+
+    return false;
+}
+
 game.prototype.placeWeapon = function(weapon) {
     const colPosition = randomNum();
     const rowPosition = randomNum();
@@ -193,18 +220,10 @@ Player.prototype.canMoveTo = function(newPossiblePosition,callBack){
 
 game.prototype.tryMovePlayer = function(player, newPossiblePosition) {
     const self = this;
-    // player.canMoveTo(newPossiblePosition, function() {
-    //   if (
-    //     self.isPositionAvailable(newPossiblePosition) //&&
-    //     // !self.hasBarriers(player.position, newPossiblePosition)
-    //   ) {
-    //     self.movePlayer(player, newPossiblePosition);
-    //   }
-    // });
     const cell = getPosition(newPossiblePosition.col, newPossiblePosition.row);
-    if (cell.classList.contains('highlight')) {
+    if (cell.classList.contains('highlight') && !self.hasBarriers(player.position, newPossiblePosition)) {
         self.movePlayer(player, newPossiblePosition);
-        // Remove highlight class
+        //removeclass function
         self.showAllMoves(newPossiblePosition);
     }
   };
@@ -221,12 +240,8 @@ game.prototype.showMove = function(position){
 };
 
 //Remove highlight function
-game.prototype.removeShowMove = function(newPossiblePosition,classToRemove){
-    const self = this;
-    const cell = getPosition(newPossiblePosition.col, newPossiblePosition.row);
-    if (cell.classList.contains('highlight')) {
-       self.removeClass(classToRemove);
-    }
+game.prototype.removeShowMove = function(){
+
 };
 // shows possible moves north south west and east of players position
 game.prototype.showAllMoves = function(position){
