@@ -143,6 +143,7 @@ game.prototype.hasBarriers = function(fromPosition, toPosition) {
       return false;
     }
     if (cell.classList.contains('barrier')) {
+    console.log('barrier exists');
       return true;
     }
 
@@ -183,9 +184,8 @@ game.prototype.placePlayer = function (player) {
         me.placePlayer(player);
     });
     if(available) {
-        
-        this.putClass(position, player.name);
         player.moveTo (position, true);
+        this.putClass(position, player.name);
     }
 };
 // Moves player to new position
@@ -198,8 +198,11 @@ Player.prototype.moveTo = function(newPosition) {
 
 game.prototype.movePlayer = function(player, newPosition) {
     console.log(player);
+    // Remove class player from old position
     this.removeClass(player.position, player.name);
+    // Set new position and name of player to the new position cell
     this.putClass(newPosition, player.name);
+
     player.moveTo(newPosition);
     console.log(newPosition);
 };
@@ -221,11 +224,19 @@ Player.prototype.canMoveTo = function(newPossiblePosition,callBack){
 game.prototype.tryMovePlayer = function(player, newPossiblePosition) {
     const self = this;
     const cell = getPosition(newPossiblePosition.col, newPossiblePosition.row);
-    if (cell.classList.contains('highlight') && !self.hasBarriers(player.position, newPossiblePosition)) {
-        self.movePlayer(player, newPossiblePosition);
-        //removeclass function
-        self.showAllMoves(newPossiblePosition);
-    }
+    player.canMoveTo(newPossiblePosition, function() {
+        if (
+          self.isPositionAvailable(newPossiblePosition) &&
+          !self.hasBarriers(player.position, newPossiblePosition)
+        ) 
+        if (cell.classList.contains('highlight')) {
+            self.movePlayer(player, newPossiblePosition);
+            //self.removeShowMove(newPossiblePosition);
+            self.showAllMoves(newPossiblePosition);
+        }
+      });
+
+    
   };
   
 game.prototype.tryMoveActivePlayer = function (newPossiblePosition){
@@ -252,9 +263,11 @@ game.prototype.showAllMoves = function(position){
     for (let i = 0; i < 3; i++) {
         // down
         newPosition.row += 1;
+
         if (newPosition.row > 0 && newPosition.row < 11){
             this.showMove(newPosition);
-        } else {
+        } 
+        else {
             break;
         }
     }
@@ -305,6 +318,7 @@ game.prototype.gameSetup = function() {
     this.player1.activePlayer = true;
     this.placePlayer(this.player1);
     this.activePlayer = this.player1;
+
     this.showAllMoves(this.player1.position);
     this.player2 = this.createPlayer2();
     this.placePlayer(this.player2);
