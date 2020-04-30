@@ -27,7 +27,8 @@ function game() {
           col: Number(element.dataset.col),
           row: Number(element.dataset.row),
         };
-        self.tryMoveActivePlayer(newPossiblePosition);
+        self.tryMoveActivePlayer(newPossiblePosition,highlightedCells);
+        console.log(highlightedCells);
       });
 }
 
@@ -222,6 +223,7 @@ Player.prototype.canMoveTo = function(newPossiblePosition,callBack){
 };
 
 game.prototype.tryMovePlayer = function(player, newPossiblePosition, highlightedCells) {
+    console.log(highlightedCells);
     const self = this;
     const cell = getPosition(newPossiblePosition.col, newPossiblePosition.row);
     player.canMoveTo(newPossiblePosition, function() {
@@ -234,13 +236,14 @@ game.prototype.tryMovePlayer = function(player, newPossiblePosition, highlighted
             self.removeShowMove(highlightedCells);
             self.showAllMoves(newPossiblePosition);
         }
-      });
+    });
 
     
-  };
+};
   
-game.prototype.tryMoveActivePlayer = function (newPossiblePosition){
-    this.tryMovePlayer(this.activePlayer, newPossiblePosition);
+game.prototype.tryMoveActivePlayer = function (newPossiblePosition, highlightedCells){
+    console.log(highlightedCells);
+    this.tryMovePlayer(this.activePlayer, newPossiblePosition, highlightedCells);
     console.log(this.activePlayer);
 };
 
@@ -252,6 +255,7 @@ game.prototype.showMove = function(position){
 
 //Remove highlight function
 game.prototype.removeShowMove = function(highlightedCells){
+    console.log(highlightedCells);
     //store all cell from showallmoves or get all of the cells that are highligted
     // jquery get all elements with a certain class
     //const AllCellHighlights = $(".highlight");
@@ -262,7 +266,7 @@ game.prototype.removeShowMove = function(highlightedCells){
 };
 // shows possible moves north south west and east of players position
 game.prototype.showAllMoves = function(position){
-    const highlightedCells = []
+    let highlightedCells = []
     let newPosition = {
       col: position.col,
       row: position.row,
@@ -270,6 +274,7 @@ game.prototype.showAllMoves = function(position){
     highlightedCells.push ({
         newPosition
     });
+    console.log(highlightedCells);
     for (let i = 0; i < 3; i++) {
         // down
         newPosition.row += 1;
