@@ -251,7 +251,9 @@ game.prototype.showMove = function(position){
 };
 
 //Remove highlight function
-game.prototype.removeShowMove = function(){
+game.prototype.removeShowMove = function(position){
+    //store all cell from showallmoves or get all of the cells that are highligted
+    // jquery get all elements with a certain class
 
 };
 // shows possible moves north south west and east of players position
@@ -263,8 +265,8 @@ game.prototype.showAllMoves = function(position){
     for (let i = 0; i < 3; i++) {
         // down
         newPosition.row += 1;
-
-        if (newPosition.row > 0 && newPosition.row < 11){
+        const cell = getPosition(newPosition.col, newPosition.row);
+        if (newPosition.row > 0 && newPosition.row < 11 && false === cell.classList.contains('barrier')){
             this.showMove(newPosition);
         } 
         else {
@@ -276,7 +278,8 @@ game.prototype.showAllMoves = function(position){
     for (let i = 0; i < 3; i++) {
         // right
         newPosition.col += 1;
-        if (newPosition.col > 0 && newPosition.col < 11){
+        const cell = getPosition(newPosition.col, newPosition.row);
+        if (newPosition.col > 0 && newPosition.col < 11 && false === cell.classList.contains('barrier')){
             this.showMove(newPosition);
         } else {
             break;
@@ -287,7 +290,8 @@ game.prototype.showAllMoves = function(position){
     for (let i = 0; i < 3; i++) {
         // up
         newPosition.row -= 1;
-        if (newPosition.row > 0 && newPosition.row < 11){
+        const cell = getPosition(newPosition.col, newPosition.row);
+        if (newPosition.row > 0 && newPosition.row < 11 && false === cell.classList.contains('barrier')){
             this.showMove(newPosition);
         } else {
             break;
@@ -298,7 +302,8 @@ game.prototype.showAllMoves = function(position){
     for (let i = 0; i < 3; i++) {
         // left
         newPosition.col -= 1;
-        if (newPosition.col > 0 && newPosition.col < 11){
+        const cell = getPosition(newPosition.col, newPosition.row);
+        if (newPosition.col > 0 && newPosition.col < 11 && false === cell.classList.contains('barrier')){
             this.showMove(newPosition);
         } else {
             break;
