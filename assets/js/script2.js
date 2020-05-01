@@ -231,7 +231,7 @@ game.prototype.tryMovePlayer = function(player, newPossiblePosition) {
         ) 
         if (cell.classList.contains('highlight')) {
             self.movePlayer(player, newPossiblePosition);
-            //self.removeShowMove(newPossiblePosition);
+            self.removeShowMove();
             self.showAllMoves(newPossiblePosition);
         }
       });
@@ -251,11 +251,16 @@ game.prototype.showMove = function(position){
 };
 
 //Remove highlight function
-game.prototype.removeShowMove = function(position){
+game.prototype.removeShowMove = function(){
     //store all cell from showallmoves or get all of the cells that are highligted
     // jquery get all elements with a certain class
+    let AllHighlightedCells = document.getElementsByClassName("highlight");
 
+    while (AllHighlightedCells[0]) {
+        AllHighlightedCells[0].classList.remove("highlight")
+    }
 };
+
 // shows possible moves north south west and east of players position
 game.prototype.showAllMoves = function(position){
     let newPosition = {
