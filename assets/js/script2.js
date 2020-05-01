@@ -234,10 +234,10 @@ game.prototype.tryMovePlayer = function(player, newPossiblePosition) {
             self.removeShowMove();
             self.showAllMoves(newPossiblePosition);
         }
-      });
+    });
 
     
-  };
+};
   
 game.prototype.tryMoveActivePlayer = function (newPossiblePosition){
     this.tryMovePlayer(this.activePlayer, newPossiblePosition);
