@@ -17,7 +17,7 @@ function game() {
     this.player2 = null;
     this.barriers = [];
     this.weapons = game.WEAPONS;
-    this.activePlayer = this.player1;
+    this.activePlayer = 'player1';
     
     const self = this;
 
@@ -28,6 +28,7 @@ function game() {
           row: Number(element.dataset.row),
         };
         self.tryMoveActivePlayer(newPossiblePosition);
+        self.fight();
       });
 }
 
@@ -74,7 +75,7 @@ function Player(name, weapon) {
     this.weapon = game.WEAPONS[weapon];
     this.position = {col: 1,row: 1};
     this.health = 100;
-    this.active = false;
+    this.inTurn = false;
 }
 // Get players position
 Player.prototype.getPosition = function() {
@@ -96,6 +97,12 @@ game.prototype.putClass = function(position,newClass,available) {
     const cell = getPosition(position.col, position.row);
     cell.classList.add(newClass);
     !available && cell.classList.add('taken');
+};
+
+game.prototype.putWeaponInfo = function(position) {
+    const cell = getPosition(position.col, position.row);
+    console.log(newClass + "is in this position")
+    cell.classList.add('sword');
 };
 
 game.prototype.removeClass = function(position, classToRemove) {
@@ -169,6 +176,7 @@ game.prototype.placeWeapon = function(weapon) {
     if(available) {
         this.weapons[weapon].position = position;
         this.putClass(position, weapon, true);
+        console.log(weapon)
     }
 };
 
@@ -205,6 +213,9 @@ game.prototype.movePlayer = function(player, newPosition) {
 
     player.moveTo(newPosition);
     console.log(newPosition);
+    this.switchWeapon(player);
+    console.log(player.weapon);
+    
 };
 
 // checks if player can move within 3 spaces
@@ -230,9 +241,13 @@ game.prototype.tryMovePlayer = function(player, newPossiblePosition) {
           !self.hasBarriers(player.position, newPossiblePosition)
         ) 
         if (cell.classList.contains('highlight')) {
+            console.log(self.activePlayer)
             self.movePlayer(player, newPossiblePosition);
             self.removeShowMove();
-            self.showAllMoves(newPossiblePosition);
+            
+            self.switchActivePlayer();
+            
+            self.showAllMoves(self[self.activePlayer].position);
         }
     });
 
@@ -240,7 +255,7 @@ game.prototype.tryMovePlayer = function(player, newPossiblePosition) {
 };
   
 game.prototype.tryMoveActivePlayer = function (newPossiblePosition){
-    this.tryMovePlayer(this.activePlayer, newPossiblePosition);
+    this.tryMovePlayer(this[this.activePlayer], newPossiblePosition);
     console.log(this.activePlayer);
 };
 
@@ -317,9 +332,69 @@ game.prototype.showAllMoves = function(position){
     newPosition.col = position.col;
 };
 
+game.prototype.findWeaponByPosition = function(newPosition) {
+    // change the parameter from a weapon to the new position,
+    // inside the function check for each weapon class in that tile eg sword / fire
+    return Object
+    .values(this.weapons)
+    .find(weapon => weapon.position && weapon.position.col === newPosition.col && weapon.position.row === newPosition.row);
+};
+
+game.prototype.switchWeapon = function(player) {
+    const position = player.position;
+    const newWeapon = this.findWeaponByPosition(position);
+    if (newWeapon) {
+        //put old weapon down
+        this.weapons[player.weapon.key].position = position;
+        this.putClass(position,player.weapon.key, true);
+        //set new weapon
+        this.weapons[newWeapon.key].position = null;
+        this.removeClass(position, newWeapon.key);
+        player.weapon = this.weapons[newWeapon.key];
+    }
+}
+// make a helper function that returns a player whose turn it is
+game.prototype.switchActivePlayer = function() {
+    // move turn to next player
+    this.activePlayer = this.activePlayer === 'player1' ? 'player2' : 'player1';
+    const passivePlayer = this.activePlayer === 'player1' ? 'player2' : 'player1';
+
+    this[this.activePlayer].activePlayer = true;
+    this[passivePlayer].activePlayer = false;
+}
+
+game.prototype.checkClosePlayer = function() {
+    // get player1 position
+    const colPlayer1 = this.player1.position.col;
+    const rowPlayer1 = this.player1.position.row;
+    // get player2 position
+    const colPlayer2 = this.player2.position.col;
+    const rowPlayer2 = this.player2.position.row;
+
+    const diffCol = Math.abs(colPlayer1 - colPlayer2);
+    const diffRow = Math.abs(rowPlayer1 - rowPlayer2);
+
+    const colClose = diffCol === 1 && diffRow === 0;
+    const rowClose = diffRow === 1 && diffCol === 0;
+
+    if (colClose || rowClose) {
+        console.log("Player ready to fight")
+        return true;
+    }
+    return false;
+};
+
+game.prototype.fight = function() {
+    const self = this;
+    if (!self.checkClosePlayer()){
+        return;
+    }
+};
+
 game.prototype.gameSetup = function() {
     this.barriers = [];
     this.weapons = game.WEAPONS;
+    this.activePlayer = 'player1';
     this.createGrid();
     for (let i = 0; i < 13; i++) {
         this.placeBarrier([i]);
@@ -327,7 +402,6 @@ game.prototype.gameSetup = function() {
     this.player1 = this.createPlayer1();
     this.player1.activePlayer = true;
     this.placePlayer(this.player1);
-    this.activePlayer = this.player1;
 
     this.showAllMoves(this.player1.position);
     this.player2 = this.createPlayer2();
