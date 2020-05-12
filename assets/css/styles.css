@@ -145,10 +145,16 @@ border-radius: 7px ;
 
 /* WEAPONS */
 .sword {
-	background-image: url('../img/sword.png')
+	background-image: url('../img/sword.png');
+	background-size: 110%;
+	background-position: center center;
+	background-repeat: no-repeat;
 }
 .fire {
-	background-image: url('../img/fire.png')
+	background-image: url('../img/fire.png');
+	background-size: 110%;
+	background-position: center center;
+	background-repeat: no-repeat;
 }
 
 /* PLAYERS */
