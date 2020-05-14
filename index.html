@@ -35,22 +35,24 @@
 				<div class="player-detail" id="knightProfile">
 					<img src="assets/img/player1.png" id="profilePic_knight" alt="knight at 100 health">
 					<p >Health</p>
-					<div class="input"  id="knightHealthInput">100</div>
+					<div class="player-health"  id="knightHealthInput"></div>
 				</div>
 				<!-- KNIGHT WEAPON IMAGE AND ATTACK -->
 				<div class="player-detail" id="knightWeaponPanel">
 					<img src='assets/img/sword.png' id='sword' class='weapon1' data-damage='10' alt='Sword'>
 					<p>Attack</p>
-					<div class="input" id="knightAttackInput">10</div>
-				</div>			
+					<div class="input" id="knightAttackInput"></div>
+				</div>
+				<button class="custom-button" id="player1-attack">ATTACK</button>	
+				<button class="custom-button" id="player1-defend">DEFEND</button>		
 			</section>
         <!--------- GRID -------->
         <div id= "grid text-center">
             <div id="grid-container">
                 <!--Gameboard-->
             </div>
-        </div>
-        <!--------- PLAYER 2 BOARD --------->
+		</div>
+		<!--------- PLAYER 2 BOARD --------->
 			<section class="player-board" id="player-board-2">
 				<!-- DRAGON NAME -->
 				<div class="name">
@@ -60,14 +62,16 @@
 				<div class="player-detail" id="dragonProfile">
 					<img src="assets/img/player2.png" id="profilePic_dragon" alt="dragon at 100 health">
 					<p >Health</p>
-					<div class="input"  id="dragonHealthInput">100</div>
+					<div class="player2-health"  id="dragonHealthInput"></div>
 				</div>
 				<!-- DRAGON WEAPON IMAGE AND ATTACK -->
 				<div class="player-detail" id="dragonWeaponPanel">
 					<img src='assets/img/fire.png' id='sword' class='weapon2' data-damage='10' alt='Fire'>
 					<p>Attack</p>
-					<div class="input" id="dragonAttackInput">10</div>
-				</div>			
+					<div class="input" id="dragonAttackInput"></div>
+				</div>	
+				<button class="custom-button" id="player2-attack">ATTACK</button>	
+				<button class="custom-button" id="player2-defend">DEFEND</button>		
 			</section>
     </main>
     <!-- Scripts -->
