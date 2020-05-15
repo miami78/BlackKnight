@@ -8,8 +8,8 @@ body {
 	font-size: 35px;
 	color: white;
 	background-image: url("../img/Steam\ Community\ Market\ Listings\ for\ 211360\ Offspring\ Fling\ Forest.jpg");
-	background-size: 120%;
-	background-position: center center;
+	background-size: cover;
+	
 	background-repeat: no-repeat;
 }
 

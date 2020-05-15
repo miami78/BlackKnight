@@ -423,21 +423,22 @@ game.prototype.isReadyToFight = function() {
 
     if (colClose || rowClose) {
         console.log("Player ready to fight")
+
         return true;
     }
     return false;
 };
 game.prototype.getPlayerStats = function() {
     // Knight stats
-    const knightHealth = document.querySelector('#knightHealthInput');
-    const knightAttack = document.querySelector('#knightAttackInput');
+    let knightHealth = document.querySelector('#knightHealthInput');
+    let knightAttack = document.querySelector('#knightAttackInput');
     
     knightHealth.innerHTML = this.player1.health;
     knightAttack.innerHTML = this.player1.weapon.damage;
 
     // Dragon stats
-    const dragonHealth = document.querySelector('#dragonHealthInput');
-    const dragonAttack = document.querySelector('#dragonAttackInput');
+    let dragonHealth = document.querySelector('#dragonHealthInput');
+    let dragonAttack = document.querySelector('#dragonAttackInput');
     
     dragonHealth.innerHTML = this.player2.health;
     dragonAttack.innerHTML = this.player1.weapon.damage;
@@ -448,6 +449,34 @@ game.prototype.tryFight = function() {
     if (!self.isReadyToFight()){
         return;
     }
+
+    if(self.player1.health > 0 && self.player2.health > 0){
+        this.activePlayer = this.activePlayer === 'player1' ? 'player2' : 'player1';
+        this.activePlayer = self[self.activePlayer];
+
+        const anotherPlayer = self.activePlayer === 'player1' ? 'player2' : 'player1';
+        const anotherPlayer = self[anotherPlayer];
+
+        this.activePlayer.inTurn = true;
+        anotherPlayer.inTurn = false;
+
+        activePlayer.fighting = true;
+        anotherPlayer.fighting = true;
+
+        const response = this.fighting || this.defending;
+
+        if (!response) {
+            return self.gameSetup();
+          }
+
+    } else {
+        self.player2.health <= 0 &&
+            alert('PLAYER 1 WINS !!!');
+        self.player1.health <= 0 &&
+            alert('PLAYER 2 WINS !!!');
+        self.gameSetup();
+    }
+
 };
 
 $(window).on("load", function() {
