@@ -1,0 +1,19 @@
+{
+  "name": "blackknight",
+  "version": "1.0.0",
+  "description": "BlackNight is a turn based game written in Javascript in which 2 players play each turn to compete.\r [Play Live](https://miami78.github.io/BlackKnight/)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miami78/BlackNight.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/miami78/BlackNight/issues"
+  },
+  "homepage": "https://github.com/miami78/BlackNight#readme"
+}
