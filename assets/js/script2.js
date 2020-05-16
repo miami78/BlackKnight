@@ -454,8 +454,8 @@ game.prototype.tryFight = function() {
         this.activePlayer = this.activePlayer === 'player1' ? 'player2' : 'player1';
         this.activePlayer = self[self.activePlayer];
 
-        const anotherPlayer = self.activePlayer === 'player1' ? 'player2' : 'player1';
-        const anotherPlayer = self[anotherPlayer];
+        const anotherPlayerKey = self.activePlayer === 'player1' ? 'player2' : 'player1';
+        const anotherPlayer = self[anotherPlayerKey];
 
         this.activePlayer.inTurn = true;
         anotherPlayer.inTurn = false;
