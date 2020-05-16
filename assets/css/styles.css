@@ -7,7 +7,7 @@ body {
     font-family: 'IM Fell English SC', serif;
 	font-size: 35px;
 	color: white;
-	background-image: url("../img/Steam\ Community\ Market\ Listings\ for\ 211360\ Offspring\ Fling\ Forest.jpg");
+	background-image: url("../assets/img/Steam\ Community\ Market\ Listings\ for\ 211360\ Offspring\ Fling\ Forest.jpg");
 	background-size: cover;
 	
 	background-repeat: no-repeat;
@@ -153,13 +153,13 @@ border-radius: 7px ;
 
 /* WEAPONS */
 .sword {
-	background-image: url('../img/sword.jpg');
+	background-image: url('../assets/img/sword.jpg');
 	background-size: 110%;
 	background-position: center center;
 	background-repeat: no-repeat;
 }
 .fire {
-	background-image: url('../img/fire.gif');
+	background-image: url('../assets/img/fire.gif');
 	background-size: 150%;
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -167,20 +167,20 @@ border-radius: 7px ;
 
 /* PLAYERS */
 .player1 {
-	background-image: url('../img/player1.png');
+	background-image: url('../assets/img/player1.png');
 	background-size: 110%;
 	background-position: center center;
 	background-repeat: no-repeat;
 }
 .player2 {
-	background-image: url('../img/player2.png');
+	background-image: url('../assets/img/player2.png');
 	background-size: 110%;
 	background-position: center center;
 	background-repeat: no-repeat;
 }
 
 .barrier {
-	background-image: url('../img/wall.jpg');
+	background-image: url('../assets/img/wall.jpg');
 	background-size: 110%;
 	background-position: center center;
 	background-repeat: no-repeat;
