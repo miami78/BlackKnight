@@ -76,6 +76,7 @@ game.prototype.gameSetup = function() {
     this.placeWeapon('sword');
     this.placeWeapon('fire');
     this.getPlayerStats()
+    this.actionButtons()
     console.log(this.player1);
     console.log(this.barriers);
     console.log(this.weapons);  
@@ -444,26 +445,37 @@ game.prototype.getPlayerStats = function() {
     dragonAttack.innerHTML = this.player1.weapon.damage;
 };
 //buttons
+        //click events for fight and defend buttons
+        //inside the click event, update the player fighting and defending props then call the tryfight function
+game.prototype.actionButtons = function() {
+const self = this;
+    //attack button for player 1
+    document.getElementById("player1-attack").onclick = function(){
+        self.tryFight()
+        self.getPlayerStats()
+        console.log("attack from player 1")
+    }
+    //attack button for player 2
+    document.getElementById("player2-attack").onclick = function(){
+        self.tryFight()
+        self.getPlayerStats()
+        console.log("attack from player 2")
+    }
 
-//attack button for player 1
-document.getElementById("player1-attack").onclick = function(){
-    console.log("attack from player 1")
+    //defend button for player 1
+    document.getElementById("player1-defend").onclick = function(){
+        self.tryFight()
+        self.getPlayerStats()
+        console.log("defend from player 1")
+    }
+    //defend button for player 2
+    document.getElementById("player2-defend").onclick = function(){
+        self.tryFight()
+        self.getPlayerStats()
+        console.log("defend from player 2")
+    }
 }
 
-//attack button for player 2
-document.getElementById("player2-attack").onclick = function(){
-    console.log("attack from player 2")
-}
-
-//defend button for player 1
-document.getElementById("player1-defend").onclick = function(){
-    console.log("defend from player 1")
-}
-
-//defend button for player 2
-document.getElementById("player2-defend").onclick = function(){
-    console.log("defend from player 2")
-}
 game.prototype.tryFight = function() {
     const self = this;
     if (!self.isReadyToFight()){
@@ -482,14 +494,17 @@ game.prototype.tryFight = function() {
 
         this.activePlayer.fighting = true;
         anotherPlayer.fighting = true;
-        //click events for fight and defend buttons
-        //inside the click event, update the player fighting and defending props then call the tryfight function
-        
-        //this.activeplayer.defending|fighting
+
+//this.activeplayer.defending|fighting
         //grab players weapon damage & substract that from the other players health
         // if the other player is defending,only subtract half of weapon damage
-        
-
+        if(this.activePlayer.fighting) {
+            this.activePlayer.defending = false;
+            anotherPlayer.health -= anotherPlayer.defending ? this.activePlayer.weapon.damage * 0.5 : this.activePlayer.weapon.damage;
+            anotherPlayer.health = Math.max(anotherPlayer.health, 0);
+        } else if (this.activePlayer) {
+            this.activePlayer.defending = true;
+        }
     } else {
         self.player2.health <= 0 &&
             alert('PLAYER 1 WINS !!!');
