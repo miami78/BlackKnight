@@ -443,7 +443,27 @@ game.prototype.getPlayerStats = function() {
     dragonHealth.innerHTML = this.player2.health;
     dragonAttack.innerHTML = this.player1.weapon.damage;
 };
+//buttons
 
+//attack button for player 1
+document.getElementById("player1-attack").onclick = function(){
+    console.log("attack from player 1")
+}
+
+//attack button for player 2
+document.getElementById("player2-attack").onclick = function(){
+    console.log("attack from player 2")
+}
+
+//defend button for player 1
+document.getElementById("player1-defend").onclick = function(){
+    console.log("defend from player 1")
+}
+
+//defend button for player 2
+document.getElementById("player2-defend").onclick = function(){
+    console.log("defend from player 2")
+}
 game.prototype.tryFight = function() {
     const self = this;
     if (!self.isReadyToFight()){
@@ -460,14 +480,15 @@ game.prototype.tryFight = function() {
         this.activePlayer.inTurn = true;
         anotherPlayer.inTurn = false;
 
-        activePlayer.fighting = true;
+        this.activePlayer.fighting = true;
         anotherPlayer.fighting = true;
-
-        const response = this.fighting || this.defending;
-
-        if (!response) {
-            return self.gameSetup();
-          }
+        //click events for fight and defend buttons
+        //inside the click event, update the player fighting and defending props then call the tryfight function
+        
+        //this.activeplayer.defending|fighting
+        //grab players weapon damage & substract that from the other players health
+        // if the other player is defending,only subtract half of weapon damage
+        
 
     } else {
         self.player2.health <= 0 &&
