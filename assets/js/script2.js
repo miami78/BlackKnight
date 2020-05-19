@@ -452,26 +452,22 @@ const self = this;
     //attack button for player 1
     document.getElementById("player1-attack").onclick = function(){
         self.tryFight()
-        self.getPlayerStats()
         console.log("attack from player 1")
     }
     //attack button for player 2
     document.getElementById("player2-attack").onclick = function(){
         self.tryFight()
-        self.getPlayerStats()
         console.log("attack from player 2")
     }
 
     //defend button for player 1
     document.getElementById("player1-defend").onclick = function(){
         self.tryFight()
-        self.getPlayerStats()
         console.log("defend from player 1")
     }
     //defend button for player 2
     document.getElementById("player2-defend").onclick = function(){
         self.tryFight()
-        self.getPlayerStats()
         console.log("defend from player 2")
     }
 }
@@ -495,16 +491,44 @@ game.prototype.tryFight = function() {
         this.activePlayer.fighting = true;
         anotherPlayer.fighting = true;
 
+        this.activePlayer.defending = false;
+        anotherPlayer.defending = false;
+
+        let playerTurn = this.activePlayer || anotherPlayer === true;
+
 //this.activeplayer.defending|fighting
         //grab players weapon damage & substract that from the other players health
         // if the other player is defending,only subtract half of weapon damage
         if(this.activePlayer.fighting) {
             this.activePlayer.defending = false;
-            anotherPlayer.health -= anotherPlayer.defending ? this.activePlayer.weapon.damage * 0.5 : this.activePlayer.weapon.damage;
+            anotherPlayer.health -= anotherPlayer.defending ? this.activePlayer.weapon.damage : this.activePlayer.weapon.damage;
             anotherPlayer.health = Math.max(anotherPlayer.health, 0);
         } else if (this.activePlayer) {
             this.activePlayer.defending = true;
         }
+        if(anotherPlayer.defending === true){
+            anotherPlayer.health -= this.activePlayer.weapon.damage / 2;
+            anotherPlayer.defending = false;
+        } else {
+            anotherPlayer.health -= this.activePlayer.weapon.damage;
+        }
+        // if(!playerTurn){
+        //     if(anotherPlayer.defending){
+        //         anotherPlayer.health = anotherPlayer.health - (this.activePlayer.weapon.damage / 2)
+        //         this.getPlayerStats()
+        //     } else {
+        //         anotherPlayer.health = anotherPlayer.health - this.activePlayer.weapon.damage;
+        //         this.getPlayerStats()
+        //     }
+        // } else {
+        //     if(this.activePlayer.defending){
+        //         this.activePlayer.health = this.activePlayer.health - (this.activePlayer.weapon.damage / 2)
+        //         this.getPlayerStats()
+        //     } else {
+        //         this.activePlayer.health = this.activePlayer.health - this.activePlayer.weapon.damage;
+        //         this.getPlayerStats()
+        //     }
+        // }
     } else {
         self.player2.health <= 0 &&
             alert('PLAYER 1 WINS !!!');
