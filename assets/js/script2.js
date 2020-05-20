@@ -21,6 +21,7 @@ function game() {
     this.weapons = game.WEAPONS;
     this.activePlayer = 'player1';
     this.defending = false;
+    this.isFirstTimeSettingUp = true;
     
     const self = this;
 
@@ -76,7 +77,11 @@ game.prototype.gameSetup = function() {
     this.placeWeapon('sword');
     this.placeWeapon('fire');
     this.getPlayerStats()
-    this.actionButtons()
+    if(this.isFirstTimeSettingUp === true){
+        this.actionButtons()
+        return;
+    }
+    
     console.log(this.player1);
     console.log(this.barriers);
     console.log(this.weapons);  
@@ -452,22 +457,26 @@ const self = this;
     //attack button for player 1
     document.getElementById("player1-attack").onclick = function(){
         self.tryFight()
+        self.getPlayerStats()
         console.log("attack from player 1")
     }
     //attack button for player 2
     document.getElementById("player2-attack").onclick = function(){
         self.tryFight()
+        self.getPlayerStats()
         console.log("attack from player 2")
     }
 
     //defend button for player 1
     document.getElementById("player1-defend").onclick = function(){
         self.tryFight()
+        self.getPlayerStats()
         console.log("defend from player 1")
     }
     //defend button for player 2
     document.getElementById("player2-defend").onclick = function(){
         self.tryFight()
+        self.getPlayerStats()
         console.log("defend from player 2")
     }
 }
@@ -480,53 +489,47 @@ game.prototype.tryFight = function() {
 
     if(self.player1.health > 0 && self.player2.health > 0){
         this.activePlayer = this.activePlayer === 'player1' ? 'player2' : 'player1';
-        this.activePlayer = self[self.activePlayer];
+        const activePlayer = self[self.activePlayer];
 
         const anotherPlayerKey = self.activePlayer === 'player1' ? 'player2' : 'player1';
         const anotherPlayer = self[anotherPlayerKey];
 
-        this.activePlayer.inTurn = true;
+        activePlayer.inTurn = true;
         anotherPlayer.inTurn = false;
 
-        this.activePlayer.fighting = true;
+        activePlayer.fighting = true;
         anotherPlayer.fighting = true;
 
-        this.activePlayer.defending = false;
-        anotherPlayer.defending = false;
-
-        let playerTurn = this.activePlayer || anotherPlayer === true;
-
-//this.activeplayer.defending|fighting
+        //this.activeplayer.defending|fighting
         //grab players weapon damage & substract that from the other players health
         // if the other player is defending,only subtract half of weapon damage
-        if(this.activePlayer.fighting) {
-            this.activePlayer.defending = false;
-            anotherPlayer.health -= anotherPlayer.defending ? this.activePlayer.weapon.damage : this.activePlayer.weapon.damage;
+        const action = this.actionButtons(attackBtn, defendBtn);
+        console.log(activePlayer.name + action);
+        activePlayer.fighting = true;
+        anotherPlayer.fighting = true;
+
+        if(action === attackBtn){
+            activePlayer.defending = false;
+            console.log(anotherPlayer.health);
+            anotherPlayer.health -= anotherPlayer.defending ? activePlayer.weapon.damage * 0.5 : activePlayer.weapon.damage;
             anotherPlayer.health = Math.max(anotherPlayer.health, 0);
-        } else if (this.activePlayer) {
-            this.activePlayer.defending = true;
+            console.log(anotherPlayer.health)
+        } else if (action === defendBtn) {
+            activePlayer.defending = true;
         }
-        if(anotherPlayer.defending === true){
-            anotherPlayer.health -= this.activePlayer.weapon.damage / 2;
-            anotherPlayer.defending = false;
-        } else {
-            anotherPlayer.health -= this.activePlayer.weapon.damage;
-        }
-        // if(!playerTurn){
+        // if(action){
         //     if(anotherPlayer.defending){
-        //         anotherPlayer.health = anotherPlayer.health - (this.activePlayer.weapon.damage / 2)
-        //         this.getPlayerStats()
+        //         anotherPlayer.defending = true;
+        //         anotherPlayer.health = anotherPlayer.health - (activePlayer.weapon.damage / 2)
         //     } else {
-        //         anotherPlayer.health = anotherPlayer.health - this.activePlayer.weapon.damage;
-        //         this.getPlayerStats()
+        //         anotherPlayer.health = anotherPlayer.health - activePlayer.weapon.damage;
         //     }
         // } else {
-        //     if(this.activePlayer.defending){
-        //         this.activePlayer.health = this.activePlayer.health - (this.activePlayer.weapon.damage / 2)
-        //         this.getPlayerStats()
+        //     if(activePlayer.defending){
+        //         activePlayer.defending = true;
+        //         activePlayer.health = activePlayer.health - (activePlayer.weapon.damage / 2)
         //     } else {
-        //         this.activePlayer.health = this.activePlayer.health - this.activePlayer.weapon.damage;
-        //         this.getPlayerStats()
+        //         activePlayer.health = activePlayer.health - activePlayer.weapon.damage;
         //     }
         // }
     } else {
@@ -539,10 +542,10 @@ game.prototype.tryFight = function() {
 
 };
 
-$(window).on("load", function() {
-    document.getElementById("newGameBtn").addEventListener("click", function() {
+$(window).on("load", () => {
+    document.getElementById("newGameBtn").addEventListener("click", () => {
         const newGame = new game();
         newGame.gameSetup();
-    });     
+    });    
 });
 })();
