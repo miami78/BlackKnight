@@ -77,10 +77,10 @@ game.prototype.gameSetup = function() {
     this.placeWeapon('sword');
     this.placeWeapon('fire');
     this.getPlayerStats()
-    if(this.isFirstTimeSettingUp === true){
-        this.actionButtons()
-        return;
-    }
+    // if(this.isFirstTimeSettingUp === true){
+    //     this.actionButtons()
+    //     return;
+    // }
     
     console.log(this.player1);
     console.log(this.barriers);
@@ -452,34 +452,38 @@ game.prototype.getPlayerStats = function() {
 //buttons
         //click events for fight and defend buttons
         //inside the click event, update the player fighting and defending props then call the tryfight function
-game.prototype.actionButtons = function() {
-const self = this;
-    //attack button for player 1
-    document.getElementById("player1-attack").onclick = function(){
-        self.tryFight()
-        self.getPlayerStats()
-        console.log("attack from player 1")
-    }
-    //attack button for player 2
-    document.getElementById("player2-attack").onclick = function(){
-        self.tryFight()
-        self.getPlayerStats()
-        console.log("attack from player 2")
-    }
+// game.prototype.actionButtons = function() {
+// const self = this;
+//     //attack button for player 1
+//     document.getElementById("player1-attack").onclick = function(){
+//         self.getPlayerStats();
+//         self.tryFight()
+//         self.getPlayerStats();
+//         console.log("attack from player 1")
+//     }
+//     //attack button for player 2
+//     document.getElementById("player2-attack").onclick = function(){
+//         self.getPlayerStats();
+//         self.tryFight()
+//         self.getPlayerStats();
+//         console.log("attack from player 2")
+//     }
 
-    //defend button for player 1
-    document.getElementById("player1-defend").onclick = function(){
-        self.tryFight()
-        self.getPlayerStats()
-        console.log("defend from player 1")
-    }
-    //defend button for player 2
-    document.getElementById("player2-defend").onclick = function(){
-        self.tryFight()
-        self.getPlayerStats()
-        console.log("defend from player 2")
-    }
-}
+//     //defend button for player 1
+//     document.getElementById("player1-defend").onclick = function(){
+//         self.getPlayerStats();
+//         self.tryFight()
+//         self.getPlayerStats();
+//         console.log("defend from player 1")
+//     }
+//     //defend button for player 2
+//     document.getElementById("player2-defend").onclick = function(){
+//         self.getPlayerStats();
+//         self.tryFight()
+//         self.getPlayerStats();
+//         console.log("defend from player 2")
+//     }
+// }
 
 game.prototype.tryFight = function() {
     const self = this;
@@ -503,35 +507,46 @@ game.prototype.tryFight = function() {
         //this.activeplayer.defending|fighting
         //grab players weapon damage & substract that from the other players health
         // if the other player is defending,only subtract half of weapon damage
-        const action = this.actionButtons(attackBtn, defendBtn);
-        console.log(activePlayer.name + action);
-        activePlayer.fighting = true;
-        anotherPlayer.fighting = true;
 
-        if(action === attackBtn){
-            activePlayer.defending = false;
-            console.log(anotherPlayer.health);
-            anotherPlayer.health -= anotherPlayer.defending ? activePlayer.weapon.damage * 0.5 : activePlayer.weapon.damage;
-            anotherPlayer.health = Math.max(anotherPlayer.health, 0);
-            console.log(anotherPlayer.health)
-        } else if (action === defendBtn) {
-            activePlayer.defending = true;
+        const P1Attack = () => {
+            document.getElementById("player1-attack").onclick = function(){
+                console.log("attack from player 1")
+            }
         }
-        // if(action){
-        //     if(anotherPlayer.defending){
-        //         anotherPlayer.defending = true;
-        //         anotherPlayer.health = anotherPlayer.health - (activePlayer.weapon.damage / 2)
-        //     } else {
-        //         anotherPlayer.health = anotherPlayer.health - activePlayer.weapon.damage;
-        //     }
-        // } else {
-        //     if(activePlayer.defending){
-        //         activePlayer.defending = true;
-        //         activePlayer.health = activePlayer.health - (activePlayer.weapon.damage / 2)
-        //     } else {
-        //         activePlayer.health = activePlayer.health - activePlayer.weapon.damage;
-        //     }
-        // }
+        const P2Attack = () => {
+            document.getElementById("player2-attack").onclick = function(){
+                console.log("attack from player 2")
+            }
+        }
+        const P1Defend = () => {
+            document.getElementById("player1-defend").onclick = function(){
+                console.log("defend from player 1")
+            }
+        }
+        const P2Defend = () => {
+            document.getElementById("player2-defend").onclick = function(){
+                console.log("defend from player 2")
+            }
+        }
+        
+        if(anotherPlayer.defending){
+            anotherPlayer.defending = true;
+            anotherPlayer.health = anotherPlayer.health - (activePlayer.weapon.damage / 2)
+            console.log(anotherPlayer.health);
+        } else {
+            anotherPlayer.health = anotherPlayer.health - activePlayer.weapon.damage;
+            console.log(anotherPlayer.health);
+        }
+    
+        if(activePlayer.defending){
+            activePlayer.defending = true;
+            activePlayer.health = activePlayer.health - (activePlayer.weapon.damage / 2)
+            console.log(activePlayer.health);
+        } else {
+            activePlayer.health = activePlayer.health - activePlayer.weapon.damage;
+            console.log(activePlayer.health);
+        }
+        
     } else {
         self.player2.health <= 0 &&
             alert('PLAYER 1 WINS !!!');
