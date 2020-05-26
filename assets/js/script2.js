@@ -21,6 +21,7 @@ function game() {
     this.weapons = game.WEAPONS;
     this.activePlayer = 'player1';
     this.defending = false;
+    this.fighting = false;
     this.isFirstTimeSettingUp = true;
     
     const self = this;
@@ -449,112 +450,97 @@ game.prototype.getPlayerStats = function() {
     dragonHealth.innerHTML = this.player2.health;
     dragonAttack.innerHTML = this.player1.weapon.damage;
 };
-//buttons
-        //click events for fight and defend buttons
-        //inside the click event, update the player fighting and defending props then call the tryfight function
-// game.prototype.actionButtons = function() {
-// const self = this;
-//     //attack button for player 1
-//     document.getElementById("player1-attack").onclick = function(){
-//         self.getPlayerStats();
-//         self.tryFight()
-//         self.getPlayerStats();
-//         console.log("attack from player 1")
-//     }
-//     //attack button for player 2
-//     document.getElementById("player2-attack").onclick = function(){
-//         self.getPlayerStats();
-//         self.tryFight()
-//         self.getPlayerStats();
-//         console.log("attack from player 2")
-//     }
-
-//     //defend button for player 1
-//     document.getElementById("player1-defend").onclick = function(){
-//         self.getPlayerStats();
-//         self.tryFight()
-//         self.getPlayerStats();
-//         console.log("defend from player 1")
-//     }
-//     //defend button for player 2
-//     document.getElementById("player2-defend").onclick = function(){
-//         self.getPlayerStats();
-//         self.tryFight()
-//         self.getPlayerStats();
-//         console.log("defend from player 2")
-//     }
-// }
 
 game.prototype.tryFight = function() {
     const self = this;
     if (!self.isReadyToFight()){
         return;
     }
+    performAction: function (action) {
+        switch (action.type.toLowerCase()) {
+          case "attack":
+            const opponent = this.players[
+              this.activePlayer.toUpperCase() == "A" ? "B" : "A"
+            ];
+            const damage = action.damage;
+            // perform attack
+            opponent.life =
+              opponent.life - (opponent.defense ? damage / 2 : damage);
+            // turn of the defense because is only available for one turn
+            opponent.defense = false;
+            // update player
+            this.players[opponent.key] = opponent;
+            // toggle the active player
+            this.activePlayer = opponent.key;
+            break;
+          case "defense":
+            this.activePlayer.defense = true;
+            break;
+          default:
+            break;
+        }
+      }
+        // this.activePlayer = this.activePlayer === 'player1' ? 'player2' : 'player1';
+        // const activePlayer = self[self.activePlayer];
 
+        // const anotherPlayerKey = self.activePlayer === 'player1' ? 'player2' : 'player1';
+        // const anotherPlayer = self[anotherPlayerKey];
+
+        // activePlayer.inTurn = true;
+        // anotherPlayer.inTurn = false;
+
+        // activePlayer.fighting = true;
+        // anotherPlayer.fighting = true;
     if(self.player1.health > 0 && self.player2.health > 0){
-        this.activePlayer = this.activePlayer === 'player1' ? 'player2' : 'player1';
-        const activePlayer = self[self.activePlayer];
-
-        const anotherPlayerKey = self.activePlayer === 'player1' ? 'player2' : 'player1';
-        const anotherPlayer = self[anotherPlayerKey];
-
-        activePlayer.inTurn = true;
-        anotherPlayer.inTurn = false;
-
-        activePlayer.fighting = true;
-        anotherPlayer.fighting = true;
-
-        //this.activeplayer.defending|fighting
-        //grab players weapon damage & substract that from the other players health
-        // if the other player is defending,only subtract half of weapon damage
-
-        const P1Attack = () => {
-            document.getElementById("player1-attack").onclick = function(){
-                console.log("attack from player 1")
+        performAction = function (action) {
+            switch (action.type) {
+              case "attack":
+                // perform attack
+                activePlayer.health =
+                  activePlayer.health - (anotherPlayer.defending ? activePlayer.weapon.damage / 2 : activePlayer.weapon.damage);
+                // turn of the defense because is only available for one turn
+                anotherPlayer.defending = false;
+                break;
+              case "defense":
+                activePlayer.defending = true;
+                break;
+              default:
+                break;
             }
-        }
-        const P2Attack = () => {
-            document.getElementById("player2-attack").onclick = function(){
-                console.log("attack from player 2")
-            }
-        }
-        const P1Defend = () => {
-            document.getElementById("player1-defend").onclick = function(){
-                console.log("defend from player 1")
-            }
-        }
-        const P2Defend = () => {
-            document.getElementById("player2-defend").onclick = function(){
-                console.log("defend from player 2")
-            }
-        }
-        
-        if(anotherPlayer.defending){
-            anotherPlayer.defending = true;
-            anotherPlayer.health = anotherPlayer.health - (activePlayer.weapon.damage / 2)
-            console.log(anotherPlayer.health);
-        } else {
-            anotherPlayer.health = anotherPlayer.health - activePlayer.weapon.damage;
-            console.log(anotherPlayer.health);
-        }
+          }
+        const $actions = Array.from(document.querySelectorAll(".action"));
+        console.log($actions)
+        $actions.forEach(($action) => {
+        $action.addEventListener("click", (e) => {
+            const actionType = e.target.dataset.actiontype;
+            console.log(actionType)
+            console.log($actions)
+            const player = e.target.dataset.playerkey;
+            console.log(player)
+            if (player != activePlayer)
+            return window.alert(
+                `You can't perform an action because the active player is: ${player.activePlayer}`
+            );
     
-        if(activePlayer.defending){
-            activePlayer.defending = true;
-            activePlayer.health = activePlayer.health - (activePlayer.weapon.damage / 2)
-            console.log(activePlayer.health);
-        } else {
-            activePlayer.health = activePlayer.health - activePlayer.weapon.damage;
-            console.log(activePlayer.health);
-        }
-        
+            switch (actionType) {
+            case "attack":
+                player.performAction({ type: "attack" });
+                break;
+            case "defense":
+                player.performAction({ type: "defense" });
+                break;
+            default:
+                break;
+            }
+        });
+        });
     } else {
         self.player2.health <= 0 &&
             alert('PLAYER 1 WINS !!!');
         self.player1.health <= 0 &&
             alert('PLAYER 2 WINS !!!');
         self.gameSetup();
-    }
-
+    }  
 };
 
 $(window).on("load", () => {
