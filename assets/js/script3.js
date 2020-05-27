@@ -36,17 +36,30 @@
     }
     
     const DEFAULT_WEAPON = 'sword';
-    
     game.WEAPONS = {
         sword: {
             key: 'sword',
             position: null,
-            damage: 10
+            damage: 10,
+            img:"<img src= ../assets/img/sword.gif>"
         },
         fire: {
             key: 'fire',
             position: null,
-            damage: 15
+            damage: 15,
+            img:"<img src= ../assets/img/fire.gif>"
+        },
+        magic: {
+            key: "magic",
+            position: null,
+            damage: 20,
+            img:"<img src= ../assets/img/magic.gif>"
+        },
+        staff: {
+            key: "staff",
+            position: null,
+            damage: 25,
+            img:"<img src= ../assets/img/staff.png>"
         }
     };
     
@@ -75,6 +88,8 @@
         }
         this.placeWeapon('sword');
         this.placeWeapon('fire');
+        this.placeWeapon('magic');
+        this.placeWeapon('staff');
         this.getPlayerStats()
         console.log(this.player1);
         console.log(this.barriers);
@@ -392,6 +407,7 @@
             this.weapons[newWeapon.key].position = null;
             this.removeClass(position, newWeapon.key);
             player.weapon = this.weapons[newWeapon.key];
+            this.getPlayerStats()
         }
     }
     // make a helper function that returns a player whose turn it is
@@ -436,7 +452,7 @@
         
         knightHealth.innerHTML = this.player1.health;
         knightAttack.innerHTML = this.player1.weapon.damage;
-        knightWeapon.innerHTML = this.player1.weapon;
+        knightWeapon.innerHTML = this.player1.weapon.img;
         console.log(this.player1.weapon)
     
         // Dragon stats
@@ -445,8 +461,8 @@
         let dragonWeapon = document.querySelector('#dragonWeaponPanel');
         
         dragonHealth.innerHTML = this.player2.health;
-        dragonAttack.innerHTML = this.player2.weapon;
-        dragonWeapon.innerHTML = this.player2.weapon;
+        dragonAttack.innerHTML = this.player2.weapon.damage;
+        dragonWeapon.innerHTML = this.player2.weapon.img;
     };    
     game.prototype.tryFight = function() {
         const self = this;

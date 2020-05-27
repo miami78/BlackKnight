@@ -18,7 +18,6 @@ img{
     height: auto;
 	align-self: center;
 }
-
 .button {
     border: none;
     background-color: #5e72e4; 
@@ -152,19 +151,36 @@ border-radius: 7px ;
 
 
 /* WEAPONS */
+
+.weapon img{
+	height: 70px;
+	width: 85px;
+}
 .sword {
-	background-image: url('../img/sword.jpg');
-	background-size: 110%;
+	background-image: url('../img/sword.gif');
+	background-size: cover;
 	background-position: center center;
 	background-repeat: no-repeat;
 }
 .fire {
 	background-image: url('../img/fire.gif');
-	background-size: 150%;
+	background-size: cover;
 	background-position: center center;
 	background-repeat: no-repeat;
 }
 
+.magic {
+	background-image: url('../img/magic.gif');
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+.staff {
+	background-image: url('../img/staff.png');
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
 /* PLAYERS */
 .player1 {
 	background-image: url('../img/player1.png');
