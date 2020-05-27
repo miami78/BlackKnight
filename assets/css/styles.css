@@ -7,7 +7,7 @@ body {
     font-family: 'IM Fell English SC', serif;
 	font-size: 35px;
 	color: white;
-	background-image: url("../img/Steam\ Community\ Market\ Listings\ for\ 211360\ Offspring\ Fling\ Forest.jpg");
+	background-image: url("https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586767/BlackKnight/background_olqunv.jpg");
 	background-size: cover;
 	
 	background-repeat: no-repeat;
@@ -157,46 +157,46 @@ border-radius: 7px ;
 	width: 85px;
 }
 .sword {
-	background-image: url('../img/sword.gif');
+	background-image: url('https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586770/BlackKnight/sword_qz2ido.gif');
 	background-size: cover;
 	background-position: center center;
 	background-repeat: no-repeat;
 }
 .fire {
-	background-image: url('../img/fire.gif');
+	background-image: url('https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586765/BlackKnight/fire_hheehz.gif');
 	background-size: cover;
 	background-position: center center;
 	background-repeat: no-repeat;
 }
 
 .magic {
-	background-image: url('../img/magic.gif');
+	background-image: url('https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586778/BlackKnight/magic_y0biuz.gif');
 	background-size: cover;
 	background-position: center center;
 	background-repeat: no-repeat;
 }
 .staff {
-	background-image: url('../img/staff.png');
+	background-image: url('https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586769/BlackKnight/staff_ushxa4.png');
 	background-size: cover;
 	background-position: center center;
 	background-repeat: no-repeat;
 }
 /* PLAYERS */
 .player1 {
-	background-image: url('../img/player1.png');
+	background-image: url('https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586769/BlackKnight/player1_fugnj7.png');
 	background-size: 110%;
 	background-position: center center;
 	background-repeat: no-repeat;
 }
 .player2 {
-	background-image: url('../img/player2.png');
+	background-image: url('https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586769/BlackKnight/player2_fnuql1.png');
 	background-size: 110%;
 	background-position: center center;
 	background-repeat: no-repeat;
 }
 
 .barrier {
-	background-image: url('../img/wall.jpg');
+	background-image: url('https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586767/BlackKnight/wall_vyojz7.jpg');
 	background-size: 110%;
 	background-position: center center;
 	background-repeat: no-repeat;
