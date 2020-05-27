@@ -12,6 +12,11 @@ body {
 	background-repeat: no-repeat;
 }
 
+img{
+    width: 90px;
+    height: auto;
+	align-self: center;
+}
 .button {
     border: none;
     background-color: #5e72e4; 
