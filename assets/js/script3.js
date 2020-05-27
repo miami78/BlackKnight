@@ -41,25 +41,25 @@
             key: 'sword',
             position: null,
             damage: 10,
-            img:"<img src= ../assets/img/sword.gif>"
+            img:"<img src= https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586770/BlackKnight/sword_qz2ido.gif>"
         },
         fire: {
             key: 'fire',
             position: null,
             damage: 15,
-            img:"<img src= ../assets/img/fire.gif>"
+            img:"<img src= https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586765/BlackKnight/fire_hheehz.gif>"
         },
         magic: {
             key: "magic",
             position: null,
             damage: 20,
-            img:"<img src= ../assets/img/magic.gif>"
+            img:"<img src= https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586778/BlackKnight/magic_y0biuz.gif>"
         },
         staff: {
             key: "staff",
             position: null,
             damage: 25,
-            img:"<img src= ../assets/img/staff.png>"
+            img:"<img src= https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586769/BlackKnight/staff_ushxa4.png>"
         }
     };
     
