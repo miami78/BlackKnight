@@ -9,15 +9,9 @@ body {
 	color: white;
 	background-image: url("https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586767/BlackKnight/background_olqunv.jpg");
 	background-size: cover;
-	
 	background-repeat: no-repeat;
 }
 
-img{
-    width: 90px;
-    height: auto;
-	align-self: center;
-}
 .button {
     border: none;
     background-color: #5e72e4; 

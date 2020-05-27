@@ -401,6 +401,7 @@
             //put old weapon down
             this.weapons[player.weapon.key].position = position;
             this.putClass(position,player.weapon.key, true);
+            this.getPlayerStats()
             //set new weapon
             this.weapons[newWeapon.key].position = null;
             this.removeClass(position, newWeapon.key);
@@ -481,7 +482,7 @@
         // }
 
         if(self.player1.health > 0 && self.player2.health > 0){
-            performAction =(action)=> {
+            const performAction =(action)=> {
                 switch (action.type) {
                   case "attack":
                       const opponent = this[
