@@ -12,7 +12,7 @@ var replace = require('gulp-replace');
 // File paths
 const files = { 
     cssPath: './assets/css/styles.css',
-    jsPath: './assets/js/script2.js'
+    jsPath: './assets/js/script3.js'
 }
 
 // minifies css
