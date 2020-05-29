@@ -3,29 +3,29 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Black Night</title>
 
     <!-- CSS & Fonts -->
-    <link rel="stylesheet" href="./dist/styles.css">
+    <link rel="stylesheet" href="./dist/css/styles.css">
 </head>
 
 <body>
     <!-------- HEADER -------->
-    <header>
-        <div id="title">
-            <img src="https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586766/BlackKnight/knight_sfsclc.png" alt="Black Knight title image">
-        </div>
-        <div id="catch-phrase">
-            <p>Off with their heads !!</p>
-        </div>
-        <button class="button" id="newGameBtn">New Game</button>
-        <button class="button" id="rulesButton">Rules</button>
+    <header class="header-container">
+        <div class="title">
+			<img class="header-img" src="https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586766/BlackKnight/knight_sfsclc.png" alt="Black Knight title image">
+			<p>Off with their heads !!</p>
+		</div>
+		<div class="header-button">
+			<button class="button" id="newGameBtn">New Game</button>
+        	<button class="button" id="rulesButton">Rules</button>
+		</div>
     </header>
     <!--------- MAIN BODY -------->
 	<main class="main">
-        <!--------- PLAYER 1 BOARD --------->
+		<!--------- PLAYER 1 BOARD --------->
 			<section class="player-board" id="player-board-1">
 				<!-- KNIGHT NAME -->
 				<div class="name">
@@ -45,13 +45,13 @@
 				<button class="action custom-button" data-playerkey='player1' data-actiontype='attack'>ATTACK</button>	
 				<button class="action custom-button" data-playerkey='player1' data-actiontype='defense'>DEFEND</button>		
 			</section>
-        <!--------- GRID -------->
-        <div id= "grid text-center">
-            <div id="grid-container">
-                <!--Gameboard-->
-            </div>
-		</div>
-		<!--------- PLAYER 2 BOARD --------->
+			        <!--------- GRID -------->
+					<div class="grid-class" id= "grid text-center">
+						<div class="grid-container-class" id="grid-container">
+							<!--Gameboard-->
+						</div>
+					</div>
+			<!--------- PLAYER 2 BOARD --------->
 			<section class="player-board" id="player-board-2">
 				<!-- DRAGON NAME -->
 				<div class="name">
@@ -71,11 +71,14 @@
 				<button class="action custom-button" data-playerkey='player2' data-actiontype='attack'>ATTACK</button>	
 				<button class="action custom-button" data-playerkey='player2' data-actiontype='defense'>DEFEND</button>		
 			</section>
+		
+
+		
     </main>
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<!-- <script src="./assets/js/script3.js"></script> -->
-	<script src="./dist/all.js"></script>
+	<script src="./dist/js/all2.js"></script>
 	<!-- <script type="module" src="./assets/js/map.js"></script>
 	<script type="module" src="./assets/js/game.js"></script> -->
 </body>

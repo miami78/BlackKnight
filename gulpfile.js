@@ -5,21 +5,23 @@ const { src, dest, watch, series, parallel } = require('gulp');
 const concat = require('gulp-concat');
 const babel = require('gulp-babel');
 const uglify = require('gulp-uglify');
+const sass = require('gulp-sass');
 let cleanCSS = require('gulp-clean-css');
 var replace = require('gulp-replace');
 
 
 // File paths
 const files = { 
-    cssPath: './assets/css/styles.css',
-    jsPath: './assets/js/script3.js'
+    scssPath: './sass/*.scss',
+    jsPath: './js/*.js'
 }
 
 // minifies css
-function cssTask(){    
-    return src(files.cssPath)
+function scssTask(){    
+    return src(files.scssPath)
+        .pipe(sass().on('error',sass.logError))
         .pipe(cleanCSS())
-        .pipe(dest('dist')
+        .pipe(dest('dist/css')
     ); // put final CSS in dist folder
 }
 
@@ -29,12 +31,12 @@ function jsTask(){
         files.jsPath
         //,'!' + 'includes/js/jquery.min.js', // to exclude any specific files
         ])
-        .pipe(concat('all.js'))
+        .pipe(concat('all2.js'))
         .pipe(babel({
             presets:["@babel/preset-env"]
         }))
         .pipe(uglify())
-        .pipe(dest('dist')
+        .pipe(dest('dist/js')
     );
 }
 
@@ -49,10 +51,10 @@ function cacheBustTask(){
 // Watch task: watch css and JS files for changes
 // If any change, run scss and js tasks simultaneously
 function watchTask(){
-    watch([files.cssPath, files.jsPath],
+    watch([files.scssPath, files.jsPath],
         {interval: 1000, usePolling: true}, //Makes docker work
         series(
-            parallel(cssTask, jsTask),
+            parallel(scssTask, jsTask),
             cacheBustTask
         )
     );    
@@ -62,7 +64,7 @@ function watchTask(){
 // Runs the css and js tasks simultaneously
 // then runs cacheBust, then watch task
 exports.default = series(
-    parallel(cssTask, jsTask), 
+    parallel(scssTask, jsTask), 
     cacheBustTask,
     watchTask
 );
