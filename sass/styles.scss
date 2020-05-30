@@ -12,9 +12,8 @@ body{
     font-family: $FONTSTACK;
     font-size: 35px;
     background-image: url("https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586767/BlackKnight/background_olqunv.jpg");
-	background-size: cover;
     background-repeat: no-repeat;
-  
+
 }
 
 // HEADER
@@ -25,6 +24,7 @@ body{
     justify-content: center;
     align-items: center;
     color: white;
+
 
     .header-button {
         display: flex;
@@ -59,7 +59,7 @@ body{
 
 // PLAYER BOARDS
 
-.player-board {
+.player-board-1 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -111,6 +111,58 @@ body{
     }
 }
 
+.player-board-2 {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+    background-color: $PRIMARYCOLOR;
+    color: white;
+    padding: 2%;
+    width: 15vh;
+
+    .player-detail {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .weapon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .custom-button {
+        border: none;
+        background-color: white; 
+        padding: 10px 25px;
+        text-align: center;
+        display: inline-block;
+        font-size: 10px;
+        font-family: $FONTSTACK;
+        margin: 4px 0px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+    }
+    .custom-button:hover {
+        background-color: $PRIMARYCOLOR;
+    }
+
+    img {
+        width: 90%;
+        height: auto;
+        margin: 5% auto auto auto;
+    }
+    p {
+        font-family: cabin, arial, sans-serif;
+        font-size: 15px;
+        margin: 4% 0 2% 0;
+        border-radius: 4px;
+    }
+}
 //GRID
 
 .grid-class {
@@ -148,6 +200,9 @@ body{
 .main {
     display: flex;
     align-items: center;
+    justify-content: space-evenly;
+
+
 }
 
 @media  (max-width: 600px) {
