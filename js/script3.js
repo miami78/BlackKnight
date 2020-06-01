@@ -574,12 +574,18 @@
         }
         self.enableFightButton()
     };
-    
+
     $(window).on("load", function() {
         document.getElementById("newGameBtn").addEventListener("click", function() {
             const newGame = new game();
             newGame.gameSetup();
             newGame.createActionButtonsEvents();
-        });     
+        });
+        document.getElementById("rulesButton").addEventListener("click", function() {
+            $("#rulesModal").css("display", "block");
+        });  
+        document.getElementById("rulesClose").addEventListener("click", function() {
+            $("#rulesModal").css("display", "none");
+        });    
     });
-    })();
+})();

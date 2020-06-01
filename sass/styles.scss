@@ -299,3 +299,44 @@ body{
     align-items: center;
     padding-top: 15px;
 }
+/* ============ HIDDEN FOOTER =========== */
+/* RULES MODAL */
+#rulesModal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	top: 45%;
+	left: 30%;
+	width: 70%;
+}
+
+#rulesStyle {
+	display: inline-block;
+	font-size: 15px;
+	padding: .5vh 2vh 1.5vh 2vh;
+	border-radius: 10px;
+	background-color: $PRIMARYCOLOR;
+	box-shadow: 7px 7px 3px -5px rgba(0,0,0,0.54);
+
+}
+
+#rulesTitle {
+	font-size: 26px;
+	color: #f3f6ef;
+	-webkit-text-stroke: 1px black;
+}
+
+#rules>p {
+	margin: 0;
+}
+
+#rulesClose {
+	font-family: cabin;
+	font-size: 15px;
+	color: #f3f6ef;
+	background-color: black;
+	padding: 2px 7px;
+	border-radius: 5px;
+	cursor: pointer;
+	box-shadow: -1px -1px 2px #f5e1d0, 1px 1px 2px #414141;
+}
