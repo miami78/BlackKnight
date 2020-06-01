@@ -573,8 +573,6 @@
             return;
         }
         self.enableFightButton()
-        
-    
     };
     
     $(window).on("load", function() {
