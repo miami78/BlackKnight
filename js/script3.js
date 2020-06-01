@@ -35,6 +35,18 @@
     
     const DEFAULT_WEAPON = 'sword';
     game.WEAPONS = {
+        player1sword: {
+            key: 'player1sword',
+            position: null,
+            damage: 10,
+            img:"<img src= https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586770/BlackKnight/sword_qz2ido.gif>"
+        },
+        player2sword: {
+            key: 'player2sword',
+            position: null,
+            damage: 10,
+            img:"<img src= https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586770/BlackKnight/sword_qz2ido.gif>"
+        },
         sword: {
             key: 'sword',
             position: null,
@@ -88,7 +100,7 @@
         this.placeWeapon('fire');
         this.placeWeapon('magic');
         this.placeWeapon('staff');
-        this.getPlayerStats()
+        this.getPlayerStats();
         console.log(this.player1);
         console.log(this.barriers);
         console.log(this.weapons);  
@@ -100,10 +112,10 @@
     
     // Function to create player
     game.prototype.createPlayer1 = function() {
-        return new Player('player1', DEFAULT_WEAPON);
+        return new Player('player1', 'player1sword');
     };
     game.prototype.createPlayer2 = function() {
-        return new Player('player2', DEFAULT_WEAPON);
+        return new Player('player2', 'player2sword');
     };
     
     // Function to draw the grid
@@ -437,6 +449,9 @@
         const rowClose = diffRow === 1 && diffCol === 0;
     
         if (colClose || rowClose) {
+            let fightmode = document.querySelector('#fight')
+            console.log(fightmode)
+            fightmode.innerHTML = "FIGHT!"
             console.log("Player ready to fight")
     
             return true;
@@ -462,81 +477,103 @@
         dragonHealth.innerHTML = this.player2.health;
         dragonAttack.innerHTML = this.player2.weapon.damage;
         dragonWeapon.innerHTML = this.player2.weapon.img;
-    };    
+    }; 
+
+    game.prototype.enableFightButton = function () {
+        const p1Attack = document.getElementById("P1Attack");
+        const p2Attack = document.getElementById("P2Attack");
+        const p1Defend = document.getElementById("P1Defend");
+        const p2Defend = document.getElementById("P2Defend");
+        console.log(p1Attack, p2Attack, p1Defend, p2Defend)
+        const player = this[this.activePlayer];
+        console.log(player)
+        console.log(this.activePlayer)
+        if(this.activePlayer == 'player1'){
+            p1Attack.classList.remove('disabled')
+            p1Defend.classList.remove('disabled')
+            p2Attack.classList.add('disabled')
+            p2Defend.classList.add('disabled')
+        } else {
+            p2Attack.classList.remove('disabled')
+            p2Defend.classList.remove('disabled')
+            p1Attack.classList.add('disabled')
+            p1Defend.classList.add('disabled')
+        }
+    } 
+    game.prototype.createActionButtonsEvents = function() {
+        const $actions = Array.from(document.querySelectorAll(".action"));
+        $actions.forEach(($action) => {
+            $action.addEventListener("click", (e) => {
+                const actionType = e.target.dataset.actiontype;
+                console.log(actionType)
+                console.log($actions)
+                const player = e.target.dataset.playerkey;
+                console.log(player)
+                if (player != this.activePlayer)
+                return window.alert(
+                    `You can't perform an action because the active player is: ${this.activePlayer}`
+                );
+        
+                switch (actionType) {
+                case "attack":
+                    this.performAction({ type: "attack" });
+                    break;
+                case "defense":
+                    this.performAction({ type: "defense" });
+                    break;
+                default:
+                    break;
+                }
+
+                if(this.player1.health > 0 && this.player2.health > 0){
+                    //
+                } else {
+                    this.player2.health <= 0 &&
+                        alert('PLAYER 1 WINS !!!');
+                    this.player1.health <= 0 &&
+                        alert('PLAYER 2 WINS !!!');
+                    this.gameSetup();
+                }
+            });
+        });
+
+    }
+    game.prototype.performAction = function(action) {
+        console.log(action);
+        switch (action.type) {
+          case "attack":
+              const opponent = this[
+                this.activePlayer == 'player1' ? 'player2' : 'player1'
+              ];
+            const activePlayer = this[this.activePlayer];
+            console.log(this.activePlayer)
+            // perform attack
+            opponent.health -= (opponent.defending ? activePlayer.weapon.damage / 2 : activePlayer.weapon.damage);
+            this.getPlayerStats()
+            console.log("health" + opponent.health + " weapon" + activePlayer.weapon.damage) 
+            // turn of the defense because is only available for one turn
+            opponent.defending = false;
+            break;
+          case "defense":
+              this[this.activePlayer].defending = true;
+            break;
+          default:
+            break;
+        }
+
+        // toggle the active player
+        this.activePlayer = this.activePlayer == 'player1' ? 'player2' : 'player1';
+        this.enableFightButton()
+
+    }
     game.prototype.tryFight = function() {
         const self = this;
+        console.log(this.activePlayer)
         if (!self.isReadyToFight()){
             return;
         }
-
-        // function enableFightButton() {
-        //     // const playerBoard1 = document.getElementById("player-board-1");
-        //     // const playerBoard2 = document.getElementById("player-board-2");
-        //     // console.log(playerBoard1)
-        //     if(this[this.activePlayer] === 'player1'){
-        //         $("#player-board-2").hide();
-        //     } 
-        //     // if (this[this.activePlayer] === 'player2'){
-        //     //     $("#player-board-1").hide();
-        //     // }
-        // }
-
-        if(self.player1.health > 0 && self.player2.health > 0){
-            const performAction =(action)=> {
-                switch (action.type) {
-                  case "attack":
-                      const opponent = this[
-                        this.activePlayer == 'player1' ? 'player2' : 'player1'
-                      ];
-                    const activePlayer = this[this.activePlayer];
-                    // perform attack
-                    opponent.health -= (opponent.defending ? activePlayer.weapon.damage / 2 : activePlayer.weapon.damage);
-                    self.getPlayerStats()
-                    console.log("health" + opponent.health + " weapon" + activePlayer.weapon.damage) 
-                    // turn of the defense because is only available for one turn
-                    opponent.defending = false;
-                    break;
-                  case "defense":
-                      this[this.activePlayer].defending = true;
-                    break;
-                  default:
-                    break;
-                }
-                // toggle the active player
-                this.activePlayer = this.activePlayer == 'player1' ? 'player2' : 'player1';   
-            }
-            const $actions = Array.from(document.querySelectorAll(".action"));
-            $actions.forEach(($action) => {
-                $action.addEventListener("click", (e) => {
-                    const actionType = e.target.dataset.actiontype;
-                    console.log(actionType)
-                    console.log($actions)
-                    const player = e.target.dataset.playerkey;
-                    console.log(player)
-                    if (player != this.activePlayer)
-                    return window.alert(
-                        `You can't perform an action because the active player is: ${this.activePlayer}`
-                    );
-            
-                    switch (actionType) {
-                    case "attack":
-                        performAction({ type: "attack" });
-                        break;
-                    case "defense":
-                        performAction({ type: "defense" });
-                        break;
-                    default:
-                        break;
-                    }
-                });
-                });
-        } else {
-            self.player2.health <= 0 &&
-                alert('PLAYER 1 WINS !!!');
-            self.player1.health <= 0 &&
-                alert('PLAYER 2 WINS !!!');
-            self.gameSetup();
-        }
+        self.enableFightButton()
+        
     
     };
     
@@ -544,6 +581,7 @@
         document.getElementById("newGameBtn").addEventListener("click", function() {
             const newGame = new game();
             newGame.gameSetup();
+            newGame.createActionButtonsEvents();
         });     
     });
     })();

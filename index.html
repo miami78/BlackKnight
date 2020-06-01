@@ -22,7 +22,10 @@
 			<button class="button" id="newGameBtn">New Game</button>
         	<button class="button" id="rulesButton">Rules</button>
 		</div>
-    </header>
+	</header>
+	<div id="fight" class="fight">
+		<!---fight mode-->
+	</div>
     <!--------- MAIN BODY -------->
 	<div class="main">
 		<!--------- PLAYER 1 BOARD --------->
@@ -42,8 +45,8 @@
 					<p>Damage</p>
 					<div class="input" id="knightAttackInput"></div>
 				</div>
-				<button class="action custom-button" data-playerkey='player1' data-actiontype='attack'>ATTACK</button>	
-				<button class="action custom-button" data-playerkey='player1' data-actiontype='defense'>DEFEND</button>		
+				<button id="P1Attack" class="action custom-button disabled" data-playerkey='player1' data-actiontype='attack'>ATTACK</button>	
+				<button id="P1Defend" class="action custom-button disabled" data-playerkey='player1' data-actiontype='defense'>DEFEND</button>		
 			</section>
 			        <!--------- GRID -------->
 					<div class="grid-class" id= "grid text-center">
@@ -68,14 +71,14 @@
 					<p>Damage</p>
 					<div class="input" id="dragonAttackInput"></div>
 				</div>	
-				<button class="action custom-button" data-playerkey='player2' data-actiontype='attack'>ATTACK</button>	
-				<button class="action custom-button" data-playerkey='player2' data-actiontype='defense'>DEFEND</button>		
+				<button id="P2Attack" class="action custom-button disabled" data-playerkey='player2' data-actiontype='attack'>ATTACK</button>	
+				<button id="P2Defend" class="action custom-button disabled" data-playerkey='player2' data-actiontype='defense'>DEFEND</button>		
 			</section>
 		</div>
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<!-- <script src="./assets/js/script3.js"></script> -->
-	<script src="./dist/js/all2.js"></script>
+	<script src="./js/script3.js"></script>
+	<!-- <script src="./dist/js/all2.js"></script> -->
 	<!-- <script type="module" src="./assets/js/map.js"></script>
 	<script type="module" src="./assets/js/game.js"></script> -->
 </body>

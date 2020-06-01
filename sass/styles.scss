@@ -98,6 +98,11 @@ body{
         background-color: $PRIMARYCOLOR;
     }
 
+    .disabled {
+        cursor: not-allowed;
+        opacity: .6;
+    }
+
     img {
         width: 90%;
         height: auto;
@@ -150,7 +155,10 @@ body{
     .custom-button:hover {
         background-color: $PRIMARYCOLOR;
     }
-
+    .disabled {
+        cursor: not-allowed;
+        opacity: .6;
+    }
     img {
         width: 90%;
         height: auto;
@@ -290,4 +298,13 @@ body{
 	background-size: 110%;
 	background-position: center center;
 	background-repeat: no-repeat;
+}
+
+// FIGHT
+.fight {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
 }
