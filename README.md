@@ -16,7 +16,7 @@ Node, Gulp.
 * npm install
 * gulp
 
-## Build with
+## Built with
 * Javascript(vanilla & jquery)
 * HTML
 * SCSS
