@@ -21,7 +21,7 @@ function scssTask(){
     return src(files.scssPath)
         .pipe(sass().on('error',sass.logError))
         .pipe(cleanCSS())
-        .pipe(dest('dist/css')
+        .pipe(dest('dist/css/style.min.css')
     ); // put final CSS in dist folder
 }
 
@@ -36,7 +36,7 @@ function jsTask(){
             presets:["@babel/preset-env"]
         }))
         .pipe(uglify())
-        .pipe(dest('dist/js')
+        .pipe(dest('dist/js/script.min.js')
     );
 }
 
