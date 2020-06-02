@@ -89,12 +89,7 @@
         this.placeWeapon('magic');
         this.placeWeapon('staff');
         this.getPlayerStats();
-        console.log(this.player1);
-        console.log(this.barriers);
-        console.log(this.weapons);  
     };
-    // https://www.w3schools.com/js/js_object_prototypes.asp
-    // Prototypes are the mechanism by which JavaScript objects inherit features from one another. 
     // The JavaScript prototype property allows you to add new properties to object constructors,
     // it also allows you to add new methods to objects constructors.
     
@@ -138,7 +133,6 @@
     game.prototype.isPositionAvailable = function(position,callBack) {
         const cell =  getPosition(position.col, position.row);
         if(cell.classList.contains('taken')){
-            console.log('position taken');
             callBack && callBack();
             return false;
         }
@@ -146,7 +140,6 @@
     };
     // Puts a new class if cell is available
     game.prototype.putClass = function(position,newClass,available) {
-        console.log(newClass);
         const cell = getPosition(position.col, position.row);
         cell.classList.add(newClass);
         !available && cell.classList.add('taken');
@@ -154,13 +147,11 @@
     
     game.prototype.putWeaponInfo = function(position) {
         const cell = getPosition(position.col, position.row);
-        console.log(newClass + "is in this position")
         cell.classList.add('sword');
     };
     
     game.prototype.removeClass = function(position, classToRemove) {
         const cell = getPosition(position.col, position.row);
-        console.log(cell);
         cell.classList.remove(classToRemove);
         cell.classList.remove('taken');
     };
@@ -197,7 +188,6 @@
         if(available) {
             this.weapons[weapon].position = position;
             this.putClass(position, weapon, true);
-            console.log(weapon)
         }
     };
     
@@ -239,7 +229,6 @@
           return false;
         }
         if (cell.classList.contains('barrier')) {
-        console.log('barrier exists');
           return true;
         }
     
@@ -251,24 +240,19 @@
     }
     // Moves player to new position
     Player.prototype.moveTo = function(newPosition) {
-        console.log(newPosition);
         this.lastPosition = Object.assign({}, this.position);
-        console.log(this.lastPosition);
         this.position = newPosition;
         
     };
     
     game.prototype.movePlayer = function(player, newPosition) {
-        console.log(player);
         // Remove class player from old position
         this.removeClass(player.position, player.name);
         // Set new position and name of player to the new position cell
         this.putClass(newPosition, player.name);
     
         player.moveTo(newPosition);
-        console.log(newPosition);
         this.switchWeapon(player);
-        console.log(player.weapon);
         
     };
     
@@ -295,7 +279,6 @@
               !self.hasBarriers(player.position, newPossiblePosition)
             ) 
             if (cell.classList.contains('highlight')) {
-                console.log(self.activePlayer)
                 self.movePlayer(player, newPossiblePosition);
                 self.removeShowMove();
                 
@@ -310,7 +293,6 @@
       
     game.prototype.tryMoveActivePlayer = function (newPossiblePosition){
         this.tryMovePlayer(this[this.activePlayer], newPossiblePosition);
-        console.log(this.activePlayer);
     };
     
     // highlight function 
@@ -439,9 +421,7 @@
     
         if (colClose || rowClose) {
             let fightmode = document.querySelector('#fight')
-            console.log(fightmode)
             fightmode.innerHTML = "FIGHT!"
-            console.log("Player ready to fight")
     
             return true;
         }
@@ -456,7 +436,6 @@
         knightHealth.innerHTML = this.player1.health;
         knightAttack.innerHTML = this.player1.weapon.damage;
         knightWeapon.innerHTML = this.player1.weapon.img;
-        console.log(this.player1.weapon)
     
         // Dragon stats
         let dragonHealth = document.querySelector('#dragonHealthInput');
@@ -473,10 +452,6 @@
         const p2Attack = document.getElementById("P2Attack");
         const p1Defend = document.getElementById("P1Defend");
         const p2Defend = document.getElementById("P2Defend");
-        console.log(p1Attack, p2Attack, p1Defend, p2Defend)
-        const player = this[this.activePlayer];
-        console.log(player)
-        console.log(this.activePlayer)
         if(this.activePlayer == 'player1'){
             p1Attack.classList.remove('disabled')
             p1Defend.classList.remove('disabled')
@@ -494,10 +469,7 @@
         $actions.forEach(($action) => {
             $action.addEventListener("click", (e) => {
                 const actionType = e.target.dataset.actiontype;
-                console.log(actionType)
-                console.log($actions)
                 const player = e.target.dataset.playerkey;
-                console.log(player)
                 if (player != this.activePlayer)
                 return window.alert(
                     `You can't perform an action because the active player is: ${this.activePlayer}`
@@ -528,18 +500,15 @@
 
     }
     game.prototype.performAction = function(action) {
-        console.log(action);
         switch (action.type) {
           case "attack":
               const opponent = this[
                 this.activePlayer == 'player1' ? 'player2' : 'player1'
               ];
             const activePlayer = this[this.activePlayer];
-            console.log(this.activePlayer)
             // perform attack
             opponent.health -= (opponent.defending ? activePlayer.weapon.damage / 2 : activePlayer.weapon.damage);
             this.getPlayerStats()
-            console.log("health" + opponent.health + " weapon" + activePlayer.weapon.damage) 
             // turn of the defense because is only available for one turn
             opponent.defending = false;
             break;
@@ -557,7 +526,6 @@
     }
     game.prototype.tryFight = function() {
         const self = this;
-        console.log(this.activePlayer)
         if (!self.isReadyToFight()){
             return;
         }
