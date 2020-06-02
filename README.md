@@ -12,6 +12,7 @@ Node, Gulp.
 ## Installation
 * Clone the repository 
 * npm install --global gulp-cli 
+* cd into folder
 * npm install
 * gulp
 
