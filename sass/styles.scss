@@ -9,6 +9,8 @@ $FONTSTACK: 'IM Fell English SC', serif;
 // GLOBAL
 
 body{
+    display: flex;
+    flex-direction: column;
     font-family: $FONTSTACK;
     font-size: 35px;
     background-image: url("https://res.cloudinary.com/dfqr8gqss/image/upload/v1591038746/BlackKnight/BlackKnightOptimized/background_olqunv-compressor_olpiip.jpg");
@@ -20,7 +22,6 @@ body{
     height: 100%;
     min-width: 735px;
     min-height: 1024px;
-
 }
 
 // HEADER
