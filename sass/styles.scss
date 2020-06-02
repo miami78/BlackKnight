@@ -13,6 +13,13 @@ body{
     font-size: 35px;
     background-image: url("https://res.cloudinary.com/dfqr8gqss/image/upload/v1591038746/BlackKnight/BlackKnightOptimized/background_olqunv-compressor_olpiip.jpg");
     background-repeat: no-repeat;
+    background-color: black;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 768px;
+    min-height: 1024px;
 
 }
 
@@ -301,7 +308,9 @@ body{
 /* ============ HIDDEN FOOTER =========== */
 /* RULES MODAL */
 #rulesModal {
-	display: none;
+    text-align: center;
+    display: none;
+    font-family: cabin;
 	position: fixed;
 	z-index: 1;
 	top: 45%;
@@ -311,7 +320,8 @@ body{
 
 #rulesStyle {
 	display: inline-block;
-	font-size: 15px;
+    font-size: 20px;
+    color: white;
 	padding: .5vh 2vh 1.5vh 2vh;
 	border-radius: 10px;
 	background-color: $PRIMARYCOLOR;
@@ -320,7 +330,8 @@ body{
 }
 
 #rulesTitle {
-	font-size: 26px;
+    font-family: $FONTSTACK;
+    font-size: 26px;
 	color: #f3f6ef;
 	-webkit-text-stroke: 1px black;
 }
@@ -331,7 +342,7 @@ body{
 
 #rulesClose {
 	font-family: cabin;
-	font-size: 15px;
+	font-size: 20px;
 	color: #f3f6ef;
 	background-color: black;
 	padding: 2px 7px;

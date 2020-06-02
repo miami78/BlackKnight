@@ -35,18 +35,6 @@
     
     const DEFAULT_WEAPON = 'sword';
     game.WEAPONS = {
-        player1sword: {
-            key: 'player1sword',
-            position: null,
-            damage: 10,
-            img:"<img src= https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586770/BlackKnight/sword_qz2ido.gif>"
-        },
-        player2sword: {
-            key: 'player2sword',
-            position: null,
-            damage: 10,
-            img:"<img src= https://res.cloudinary.com/dfqr8gqss/image/upload/v1590586770/BlackKnight/sword_qz2ido.gif>"
-        },
         sword: {
             key: 'sword',
             position: null,
@@ -112,10 +100,10 @@
     
     // Function to create player
     game.prototype.createPlayer1 = function() {
-        return new Player('player1', 'player1sword');
+        return new Player('player1', DEFAULT_WEAPON);
     };
     game.prototype.createPlayer2 = function() {
-        return new Player('player2', 'player2sword');
+        return new Player('player2', DEFAULT_WEAPON);
     };
     
     // Function to draw the grid
@@ -412,11 +400,12 @@
         if (newWeapon) {
             //put old weapon down
             this.weapons[player.weapon.key].position = position;
+            this.removeClass(position, newWeapon.key);
             this.putClass(position,player.weapon.key, true);
             this.getPlayerStats()
             //set new weapon
             this.weapons[newWeapon.key].position = null;
-            this.removeClass(position, newWeapon.key);
+            
             player.weapon = this.weapons[newWeapon.key];
             this.getPlayerStats()
         }

@@ -21,22 +21,23 @@ function scssTask(){
     return src(files.scssPath)
         .pipe(sass().on('error',sass.logError))
         .pipe(cleanCSS())
-        .pipe(dest('dist/css/style.min.css')
+        .pipe(concat('style.min.css'))
+        .pipe(dest('dist/css')
     ); // put final CSS in dist folder
 }
 
-// JS task: concatenates and uglifies JS files to script.js
+// JS task: concatenates and uglifies JS files to script.min.js
 function jsTask(){
     return src([
         files.jsPath
         //,'!' + 'includes/js/jquery.min.js', // to exclude any specific files
         ])
-        .pipe(concat('all2.js'))
+        .pipe(concat('script.min.js'))
         .pipe(babel({
             presets:["@babel/preset-env"]
         }))
         .pipe(uglify())
-        .pipe(dest('dist/js/script.min.js')
+        .pipe(dest('dist/js')
     );
 }
 
