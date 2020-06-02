@@ -4,7 +4,7 @@ BlackNight is a turn based game written in Javascript in which 2 players play ea
 [Play Live](https://miami78.github.io/BlackKnight/)
 
 ## Demo
-![demo](https://res.cloudinary.com/dfqr8gqss/image/upload/v1591084055/BlackKnight/BlackKnightOptimized/ezgif.com-video-to-gif_1_hetufj.gif)
+![demo](https://res.cloudinary.com/dfqr8gqss/image/upload/v1591085026/BlackKnight/BlackKnightOptimized/ezgif.com-optimize_v5o889.gif)
 
 ## Prerequisites
 Node, Gulp.
