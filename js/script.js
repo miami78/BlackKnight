@@ -172,7 +172,7 @@
             this.putClass(position, 'barrier');
         }
     };
-    
+    // Function to place weapons
     game.prototype.placeWeapon = function(weapon) {
         const colPosition = randomNum();
         const rowPosition = randomNum();
@@ -190,7 +190,7 @@
             this.putClass(position, weapon, true);
         }
     };
-    
+    // Function to place players
     game.prototype.placePlayer = function (player) {
         const colPosition = randomNum();
         const rowPosition = randomNum();
@@ -207,7 +207,7 @@
             this.putClass(position, player.name);
         }
     };
-    
+    // Function to check if cell has a barrier
     game.prototype.hasBarriers = function(fromPosition, toPosition) {
         const direction = toPosition.col == fromPosition.col ? 'row' : 'col';
         const diff = direction === 'col'
@@ -375,7 +375,7 @@
         .values(this.weapons)
         .find(weapon => weapon.position && weapon.position.col === newPosition.col && weapon.position.row === newPosition.row);
     };
-    
+    // Function to switch weapon when a player lands on it
     game.prototype.switchWeapon = function(player) {
         const position = player.position;
         const newWeapon = this.findWeaponByPosition(position);
@@ -403,7 +403,7 @@
     
      
     }
-    
+    // Function to check if players are close to each other
     game.prototype.isReadyToFight = function() {
         // get player1 position
         const colPlayer1 = this.player1.position.col;
@@ -427,6 +427,7 @@
         }
         return false;
     };
+    // Function to refresh player health and weapons
     game.prototype.getPlayerStats = function() {
         // Knight stats
         let knightHealth = document.querySelector('#knightHealthInput');
@@ -446,7 +447,7 @@
         dragonAttack.innerHTML = this.player2.weapon.damage;
         dragonWeapon.innerHTML = this.player2.weapon.img;
     }; 
-
+    // Function to enable/ dissable the fight buttons
     game.prototype.enableFightButton = function () {
         const p1Attack = document.getElementById("P1Attack");
         const p2Attack = document.getElementById("P2Attack");
@@ -464,6 +465,7 @@
             p1Defend.classList.add('disabled')
         }
     } 
+    // Function to set the action buttons
     game.prototype.createActionButtonsEvents = function() {
         const $actions = Array.from(document.querySelectorAll(".action"));
         $actions.forEach(($action) => {
@@ -499,6 +501,7 @@
         });
 
     }
+    // Function that performs calculations on fight and defend buttons
     game.prototype.performAction = function(action) {
         switch (action.type) {
           case "attack":
@@ -524,6 +527,7 @@
         this.enableFightButton()
 
     }
+    // Function that initiates the fight sequence
     game.prototype.tryFight = function() {
         const self = this;
         if (!self.isReadyToFight()){
@@ -532,7 +536,7 @@
         self.enableFightButton()
         self.removeShowMove()
     };
-
+    // button to start a new game and rules
     $(window).on("load", function() {
         document.getElementById("newGameBtn").addEventListener("click", function() {
             const newGame = new game();
