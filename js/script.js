@@ -530,6 +530,7 @@
             return;
         }
         self.enableFightButton()
+        self.removeShowMove()
     };
 
     $(window).on("load", function() {
